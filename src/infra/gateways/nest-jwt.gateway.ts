@@ -1,25 +1,38 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
-import { DateManipulatorGateway } from '@/domain/account/gateways/date-manipulator.gateway'
-import { EnvGateway } from '@/domain/account/gateways/env.gateway'
-import {
-  JwtGateway,
-  JwtGenerateAuthTokensRequest,
-  JwtGenerateAuthTokensResponse,
-  JwtSignRequest,
-  JwtSignResponse,
-  JwtVerifyRequest,
-  JwtVerifyResponse,
-} from '@/domain/account/gateways/jwt.gateway'
-import { AccountTokenRepository } from '@/domain/account/repositories/account-token.repository'
+import { DateManipulatorGateway } from '@/infra/gateways/date-fns-date-manipulator.gateway'
+import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
+
+export type JwtPayload = {
+  accountId: string
+}
+
+export type JwtSignRequest = {
+  payload: JwtPayload
+  expiresIn: string
+}
+
+export type JwtSignResponse = string
+
+export type JwtVerifyRequest = string
+
+export type JwtVerifyResponse = JwtPayload
+
+export type JwtGenerateAuthTokensRequest = JwtPayload
+
+export type JwtGenerateAuthTokensResponse = {
+  accessToken: string
+  refreshToken: string
+}
 
 @Injectable()
-export class NestJwtGateway implements JwtGateway {
+class NestJwtGateway {
   constructor(
     private jwt: JwtService,
     private dateManipulatorGateway: DateManipulatorGateway,
-    private accountTokenRepository: AccountTokenRepository,
+    private prisma: PrismaService,
     private config: EnvGateway,
   ) {}
 
@@ -67,10 +80,12 @@ export class NestJwtGateway implements JwtGateway {
       days: refreshTokenExpiresInDays,
     })
 
-    await this.accountTokenRepository.create({
-      expiresDate,
-      refreshToken,
-      accountId: payload.accountId,
+    await this.prisma.accountToken.create({
+      data: {
+        expiresDate,
+        refreshToken,
+        accountId: payload.accountId,
+      },
     })
 
     return {
@@ -79,3 +94,5 @@ export class NestJwtGateway implements JwtGateway {
     }
   }
 }
+
+export { NestJwtGateway as JwtGateway }

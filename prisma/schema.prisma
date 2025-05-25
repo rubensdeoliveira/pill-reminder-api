@@ -7,11 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  PATIENT
+  DENTIST
+}
+
 model Account {
   id        String         @id @default(uuid())
   name      String
-  email     String         @unique
+  email     String?
   password  String?
+  phone     String?
+  dob       DateTime?      @db.Date
+  role      Role           @default(PATIENT)
   tokens    AccountToken[]
   createdAt DateTime?      @default(now()) @map("created_at")
   updatedAt DateTime?      @updatedAt @map("updated_at")
@@ -31,12 +40,10 @@ model AccountToken {
 }
 
 model Medicine {
-  id               String    @id @default(uuid())
-  name             String
-  defaultQuantity  String    @map("default_quantity")
-  defaultFrequency String    @map("default_frequency")
-  createdAt        DateTime? @default(now()) @map("created_at")
-  updatedAt        DateTime? @updatedAt @map("updated_at")
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("medicines")
 }

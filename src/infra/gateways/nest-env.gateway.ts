@@ -1,13 +1,26 @@
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import { EnvGateway, EnvModel } from '@/domain/account/gateways/env.gateway'
+export type AppConfig = {
+  DATABASE_URL: string
+  API_PORT: number
+  JWT_SECRET: string
+  JWT_TOKEN_EXPIRES_IN: string
+  JWT_REFRESH_TOKEN_EXPIRES_IN_DAYS: number
+  GOOGLE_CLIENT_ID: string
+  GOOGLE_CLIENT_SECRET: string
+  GOOGLE_CLIENT_CALLBACK_URL: string
+  API_APP_NAME: string
+  WEB_APP_URL: string
+}
 
 @Injectable()
-export class NestEnvGateway implements EnvGateway {
-  constructor(private configService: ConfigService<EnvModel, true>) {}
+class NestEnvGateway {
+  constructor(private configService: ConfigService<AppConfig, true>) {}
 
-  get<T extends keyof EnvModel>(key: T): EnvModel[T] {
+  get<T extends keyof AppConfig>(key: T): AppConfig[T] {
     return this.configService.get(key, { infer: true })
   }
 }
+
+export { NestEnvGateway as EnvGateway }

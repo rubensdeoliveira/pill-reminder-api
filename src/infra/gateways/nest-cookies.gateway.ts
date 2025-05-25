@@ -1,14 +1,21 @@
 import { Injectable } from '@nestjs/common'
 
 import { convertDaysInMiliSeconds } from '@/application/shared/helpers/convert-days-in-seconds.util'
-import {
-  CookiesGateway,
-  CookiesModel,
-} from '@/domain/account/gateways/cookies.gateway'
-import { EnvGateway } from '@/domain/account/gateways/env.gateway'
+import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
+
+export type CookiesModel = {
+  REFRESH_TOKEN: string
+  ACCESS_TOKEN: string
+  COOKIE_OPTIONS: {
+    httpOnly: boolean
+    secure: boolean
+    maxAge: number
+    path: string
+  }
+}
 
 @Injectable()
-export class NestCookiesGateway implements CookiesGateway {
+export class NestCookiesGateway {
   constructor(private config: EnvGateway) {}
 
   get<T extends keyof CookiesModel>(key: T): CookiesModel[T] {
@@ -36,3 +43,5 @@ export class NestCookiesGateway implements CookiesGateway {
     throw new Error(`Invalid cookie key: ${key}`)
   }
 }
+
+export { NestCookiesGateway as CookiesGateway }

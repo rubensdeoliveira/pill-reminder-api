@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import { addDays } from 'date-fns'
 
-import {
-  AddDaysParams,
-  DateManipulatorGateway,
-} from '@/domain/account/gateways/date-manipulator.gateway'
+export type AddDaysInput = {
+  date: Date
+  days: number
+}
 
 @Injectable()
-export class DateFnsDateManipulatorGateway implements DateManipulatorGateway {
+class DateFnsDateManipulatorGateway {
   constructor() {}
 
-  addDays({ date, days }: AddDaysParams): Date {
+  addDays({ date, days }: AddDaysInput): Date {
     const dateWithAddedDays = addDays(date, days)
     return dateWithAddedDays
   }
 }
+
+export { DateFnsDateManipulatorGateway as DateManipulatorGateway }

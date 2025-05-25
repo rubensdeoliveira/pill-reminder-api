@@ -5,12 +5,13 @@ import {
   refreshSessionValidator,
 } from '@/application/account/validators/refresh-session.validator'
 import { RefreshSessionUseCase } from '@/domain/account/use-cases/refresh-session.use-case'
+import { Routes } from '@/application/shared/constants/routes'
 
-@Controller('/session')
+@Controller()
 export class RefreshSessionController {
   constructor(private readonly refreshSessionUseCase: RefreshSessionUseCase) {}
 
-  @Post('/refresh')
+  @Post(Routes.SESSION.REFRESH)
   @HttpCode(200)
   async handle(@Body(refreshSessionValidator) data: RefreshSessionBodySchema) {
     const session = await this.refreshSessionUseCase.execute(data)

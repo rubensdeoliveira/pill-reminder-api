@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { envSchema } from '@/infra/config/env/env'
 import { AccountModule } from '@/infra/modules/account.module'
 import { HealthCheckModule } from '@/infra/modules/shared/health-check.module'
-import { TaskModule } from '@/infra/modules/task.module'
+import { MedicineModule } from '@/infra/modules/medicine.module'
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { TaskModule } from '@/infra/modules/task.module'
       validate: (env) => envSchema.parse(env),
     }),
     AccountModule,
-    TaskModule,
+    MedicineModule,
     HealthCheckModule,
   ],
 })

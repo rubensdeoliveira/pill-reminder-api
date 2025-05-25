@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { compare, hash } from 'bcryptjs'
 
-import {
-  EncryptionGateway,
-  ValidateHashParams,
-} from '@/domain/account/gateways/encryption.gateway'
+export type ValidateHashInput = {
+  value: string
+  hashedValue: string
+}
 
 @Injectable()
-export class BcryptEncryptionGateway implements EncryptionGateway {
+export class BcryptEncryptionGateway {
   constructor() {}
 
   async createHash(value: string): Promise<string> {
@@ -18,8 +18,10 @@ export class BcryptEncryptionGateway implements EncryptionGateway {
   async validateHash({
     value,
     hashedValue,
-  }: ValidateHashParams): Promise<boolean> {
+  }: ValidateHashInput): Promise<boolean> {
     const isValid = await compare(value, hashedValue)
     return isValid
   }
 }
+
+export { BcryptEncryptionGateway as EncryptionGateway }

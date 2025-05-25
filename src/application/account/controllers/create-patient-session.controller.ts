@@ -1,0 +1,24 @@
+import { Body, Controller, HttpCode, Post } from '@nestjs/common'
+
+import {
+  createPatientSessionValidator,
+  CreatePatientSessionBodySchema,
+} from '@/application/account/validators/create-patient-session.validator'
+import { CreatePatientSessionUseCase } from '@/domain/account/use-cases/create-patient-session.use-case'
+import { Routes } from '@/application/shared/constants/routes'
+
+@Controller()
+export class CreatePatientSessionController {
+  constructor(
+    private createPatientSessionUseCase: CreatePatientSessionUseCase,
+  ) {}
+
+  @Post(Routes.SESSION.PATIENT.LOGIN)
+  @HttpCode(200)
+  async handle(
+    @Body(createPatientSessionValidator) data: CreatePatientSessionBodySchema,
+  ) {
+    const session = await this.createPatientSessionUseCase.execute(data)
+    return session
+  }
+}

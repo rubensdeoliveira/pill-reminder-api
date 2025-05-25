@@ -3,11 +3,11 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-google-oauth20'
 import { z } from 'zod'
 
-import { EnvGateway } from '@/domain/account/gateways/env.gateway'
+import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
 import {
-  CreateSessionWithGoogleUseCase,
-  CreateSessionWithGoogleUseCaseResponse,
-} from '@/domain/account/use-cases/create-session-with-google.use-case'
+  CreateDentistSessionWithGoogleUseCase,
+  CreateDentistSessionWithGoogleUseCaseOutput,
+} from '@/domain/account/use-cases/create-dentist-session-with-google.use-case'
 
 const validationSchema = z.object({
   email: z.string().email(),
@@ -24,7 +24,7 @@ type GoogleProfile = {
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy) {
   constructor(
-    private createSessionWithGoogleUseCase: CreateSessionWithGoogleUseCase,
+    private createDentistSessionWithGoogleUseCase: CreateDentistSessionWithGoogleUseCase,
     private config: EnvGateway,
   ) {
     super({
@@ -39,7 +39,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     _: string,
     __: string,
     profile: GoogleProfile,
-  ): Promise<Partial<CreateSessionWithGoogleUseCaseResponse>> {
+  ): Promise<Partial<CreateDentistSessionWithGoogleUseCaseOutput>> {
     const data = {
       email: profile.emails[0].value,
       name: profile.displayName,
@@ -48,7 +48,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     if (!result.success) {
       throw new BadRequestException('Invalid profile data from google')
     }
-    const session = await this.createSessionWithGoogleUseCase.execute(
+    const session = await this.createDentistSessionWithGoogleUseCase.execute(
       result.data,
     )
     return session
