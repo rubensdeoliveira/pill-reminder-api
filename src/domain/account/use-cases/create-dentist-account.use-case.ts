@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { EncryptionGateway } from '@/infra/gateways/bcrypt-encryption.gateway'
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { CreateDentistAccountBodySchema } from '@/application/account/validators/create-dentist-account.validator'
 import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
+import { EncryptionGateway } from '@/infra/gateways/bcrypt-encryption.gateway'
 
 type CreateDentistAccountUseCaseInput = CreateDentistAccountBodySchema
 

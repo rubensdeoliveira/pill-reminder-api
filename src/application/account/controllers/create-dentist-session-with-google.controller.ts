@@ -1,8 +1,9 @@
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
+
 import { Routes } from '@/application/shared/constants/routes'
 import { GoogleGuard } from '@/application/shared/guards/google.guard'
 import { CookiesGateway } from '@/infra/gateways/nest-cookies.gateway'
 import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 
 @Controller()
 export class CreateDentistSessionWithGoogleController {

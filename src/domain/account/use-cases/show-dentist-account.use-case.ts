@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 
 type ShowDentistAccountUseCaseInput = { accountId: string }
 

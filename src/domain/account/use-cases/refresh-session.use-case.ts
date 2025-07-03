@@ -1,7 +1,8 @@
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+
 import { RefreshSessionBodySchema } from '@/application/account/validators/refresh-session.validator'
 import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { JwtGateway } from '@/infra/gateways/nest-jwt.gateway'
-import { Injectable, UnauthorizedException } from '@nestjs/common'
 
 type RefreshSessionUseCaseInput = RefreshSessionBodySchema
 
@@ -29,6 +30,13 @@ export class RefreshSessionUseCase {
         accountId,
         refreshToken: token,
       },
+      include: {
+        account: {
+          select: {
+            role: true,
+          },
+        },
+      },
     })
     if (!accountToken) {
       throw new UnauthorizedException('Invalid refresh token')
@@ -43,6 +51,7 @@ export class RefreshSessionUseCase {
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
         accountId,
+        role: accountToken.account.role,
       })
 
     return { refreshToken, accessToken }

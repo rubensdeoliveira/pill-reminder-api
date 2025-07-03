@@ -1,11 +1,11 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 
 import {
-  createPatientSessionValidator,
   CreatePatientSessionBodySchema,
+  createPatientSessionValidator,
 } from '@/application/account/validators/create-patient-session.validator'
-import { CreatePatientSessionUseCase } from '@/domain/account/use-cases/create-patient-session.use-case'
 import { Routes } from '@/application/shared/constants/routes'
+import { CreatePatientSessionUseCase } from '@/domain/account/use-cases/create-patient-session.use-case'
 
 @Controller()
 export class CreatePatientSessionController {

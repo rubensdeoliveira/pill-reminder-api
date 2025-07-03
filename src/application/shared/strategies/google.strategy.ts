@@ -3,11 +3,11 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-google-oauth20'
 import { z } from 'zod'
 
-import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
 import {
   CreateDentistSessionWithGoogleUseCase,
   CreateDentistSessionWithGoogleUseCaseOutput,
 } from '@/domain/account/use-cases/create-dentist-session-with-google.use-case'
+import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
 
 const validationSchema = z.object({
   email: z.string().email(),

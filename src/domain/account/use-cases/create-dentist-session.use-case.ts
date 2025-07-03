@@ -1,10 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
+import { CreateDentistSessionBodySchema } from '@/application/account/validators/create-dentist-session.validator'
+import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { EncryptionGateway } from '@/infra/gateways/bcrypt-encryption.gateway'
 import { JwtGateway } from '@/infra/gateways/nest-jwt.gateway'
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
-import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
-import { CreateDentistSessionBodySchema } from '@/application/account/validators/create-dentist-session.validator'
 
 type CreateDentistSessionUseCaseInput = CreateDentistSessionBodySchema
 
@@ -47,6 +47,7 @@ export class CreateDentistSessionUseCase {
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
         accountId: account.id,
+        role: account.role,
       })
 
     const { id, name, phone, dob } = account

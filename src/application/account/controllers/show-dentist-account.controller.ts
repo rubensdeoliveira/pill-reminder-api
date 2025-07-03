@@ -1,12 +1,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common'
 
+import { Routes } from '@/application/shared/constants/routes'
 import {
   CurrentAccount,
   CurrentAccountType,
 } from '@/application/shared/decorators/current-account.decorator'
 import { JwtGuard } from '@/application/shared/guards/jwt.guard'
 import { ShowDentistAccountUseCase } from '@/domain/account/use-cases/show-dentist-account.use-case'
-import { Routes } from '@/application/shared/constants/routes'
 
 @Controller()
 @UseGuards(JwtGuard)

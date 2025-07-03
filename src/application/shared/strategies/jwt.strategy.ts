@@ -1,8 +1,9 @@
-import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { ExtractJwt, Strategy } from 'passport-jwt'
 import { z } from 'zod'
+
+import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
 
 const accountPayload = z.object({
   sub: z.string(),

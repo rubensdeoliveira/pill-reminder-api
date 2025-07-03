@@ -1,12 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { Role } from '@prisma/client'
 
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { DateManipulatorGateway } from '@/infra/gateways/date-fns-date-manipulator.gateway'
 import { EnvGateway } from '@/infra/gateways/nest-env.gateway'
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 
 export type JwtPayload = {
   accountId: string
+  role: Role
 }
 
 export type JwtSignRequest = {

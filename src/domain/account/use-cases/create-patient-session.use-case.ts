@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { JwtGateway } from '@/infra/gateways/nest-jwt.gateway'
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
-import { PatientAccountModel } from '@/domain/account/models/patient-account.model'
 import { CreatePatientSessionBodySchema } from '@/application/account/validators/create-patient-session.validator'
+import { PatientAccountModel } from '@/domain/account/models/patient-account.model'
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
+import { JwtGateway } from '@/infra/gateways/nest-jwt.gateway'
 
 type CreatePatientSessionUseCaseInput = CreatePatientSessionBodySchema
 
@@ -38,6 +38,7 @@ export class CreatePatientSessionUseCase {
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
         accountId: account.id,
+        role: account.role,
       })
 
     const { id, name, email } = account

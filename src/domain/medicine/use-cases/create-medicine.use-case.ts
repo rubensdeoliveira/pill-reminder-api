@@ -1,5 +1,6 @@
-import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { Injectable } from '@nestjs/common'
+
+import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 
 type CreateMedicineUseCaseInput = {
   name: string

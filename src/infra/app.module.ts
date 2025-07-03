@@ -3,8 +3,8 @@ import { ConfigModule } from '@nestjs/config'
 
 import { envSchema } from '@/infra/config/env/env'
 import { AccountModule } from '@/infra/modules/account.module'
-import { HealthCheckModule } from '@/infra/modules/shared/health-check.module'
 import { MedicineModule } from '@/infra/modules/medicine.module'
+import { HealthCheckModule } from '@/infra/modules/shared/health-check.module'
 
 @Module({
   imports: [

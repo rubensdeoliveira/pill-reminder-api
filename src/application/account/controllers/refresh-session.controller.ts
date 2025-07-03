@@ -4,8 +4,8 @@ import {
   RefreshSessionBodySchema,
   refreshSessionValidator,
 } from '@/application/account/validators/refresh-session.validator'
-import { RefreshSessionUseCase } from '@/domain/account/use-cases/refresh-session.use-case'
 import { Routes } from '@/application/shared/constants/routes'
+import { RefreshSessionUseCase } from '@/domain/account/use-cases/refresh-session.use-case'
 
 @Controller()
 export class RefreshSessionController {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 
+import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
 import { PrismaService } from '@/infra/database/prisma/config/prisma.service'
 import { JwtGateway } from '@/infra/gateways/nest-jwt.gateway'
-import { DentistAccountModel } from '@/domain/account/models/dentist-account.model'
 
 type CreateDentistSessionWithGoogleUseCaseInput = {
   email: string
@@ -45,6 +45,7 @@ export class CreateDentistSessionWithGoogleUseCase {
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
         accountId: account.id,
+        role: account.role,
       })
 
     const { id } = account
