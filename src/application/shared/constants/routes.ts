@@ -2,14 +2,14 @@ export const Routes = {
   // Session Routes
   SESSION: {
     DENTIST: {
-      LOGIN: '/session/dentist/login',
+      CREATE: '/session/dentist',
       GOOGLE: {
-        LOGIN: '/session/dentist/google',
+        CREATE: '/session/dentist/google',
         CALLBACK: '/session/google/callback',
       },
     },
     PATIENT: {
-      LOGIN: '/session/patient/login',
+      CREATE: '/session/patient',
     },
     REFRESH: '/session/refresh',
   },

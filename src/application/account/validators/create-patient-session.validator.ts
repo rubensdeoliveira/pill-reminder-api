@@ -4,7 +4,12 @@ import { ZodValidationPipe } from '@/application/shared/pipes/zod-validation.pip
 
 const createPatientSessionBodySchema = z.object({
   phone: z.string().min(8),
-  dob: z.date(),
+  dob: z
+    .string()
+    .refine((val) => !isNaN(new Date(val).getTime()), {
+      message: 'Invalid date',
+    })
+    .transform((val) => new Date(val)),
 })
 
 export type CreatePatientSessionBodySchema = z.infer<

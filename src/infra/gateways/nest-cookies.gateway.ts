@@ -19,7 +19,7 @@ export class NestCookiesGateway {
   constructor(private config: EnvGateway) {}
 
   get<T extends keyof CookiesModel>(key: T): CookiesModel[T] {
-    const appName = this.config.get('API_APP_NAME')
+    const appName = this.config.get('BACKEND_NAME')
 
     if (key === 'REFRESH_TOKEN') {
       return `${appName}_refresh_token` as CookiesModel[T]

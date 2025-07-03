@@ -12,7 +12,7 @@ export class CreateDentistSessionController {
     private createDentistSessionUseCase: CreateDentistSessionUseCase,
   ) {}
 
-  @Post(Routes.SESSION.DENTIST.LOGIN)
+  @Post(Routes.SESSION.DENTIST.CREATE)
   @HttpCode(200)
   async handle(
     @Body(createDentistSessionValidator) data: CreateDentistSessionBodySchema,

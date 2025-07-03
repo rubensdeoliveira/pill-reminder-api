@@ -8,8 +8,7 @@ async function bootstrap() {
   app.enableCors()
 
   const configService = app.get(EnvGateway)
-  console.log(configService.get('API_PORT'))
-  const port = configService.get('API_PORT')
+  const port = configService.get('BACKEND_PORT')
 
   await app.listen(port)
 }

@@ -11,7 +11,7 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN npm install -g pnpm 
 
 COPY . .
-RUN pnpm turbo prune @mestrado/api --docker
+RUN pnpm turbo prune @pill-reminder/api --docker
 
 FROM base AS installer
 RUN apk update

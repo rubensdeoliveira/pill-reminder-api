@@ -26,9 +26,9 @@ async function createIfNotExists({
 
     if (!exists) {
       await prisma[modelName].create({ data: item })
-      console.log(`Criado: ${JSON.stringify(item)}`)
+      console.info(`Criado: ${JSON.stringify(item)}`)
     } else {
-      console.log(`Já existe: ${item[uniqueAttributeToCheck]}`)
+      console.info(`Já existe: ${item[uniqueAttributeToCheck]}`)
     }
   }
 
@@ -41,13 +41,13 @@ async function main() {
     data: [
       {
         name: faker.person.fullName(),
-        email: 'academyativo@fr.com',
+        email: 'academy@fr.com',
         password: await hash('devdevdev', 8),
       },
     ],
   })
 
-  console.log('Seeded data')
+  console.info('Seeded data')
 }
 main()
   .then(async () => {

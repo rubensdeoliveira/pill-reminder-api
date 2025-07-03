@@ -1,9 +1,7 @@
-version: '3.7'
-
 services: 
   postgres:
     image: postgres:13
-    container_name: mestrado-api-postgres
+    container_name: pill-reminder-api-postgres
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
@@ -11,35 +9,35 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=mestrado
+      - POSTGRES_DB=pill-reminder
     networks:
-      - mestrado-network
+      - pill-reminder-network
 
   app: 
-    container_name: mestrado-api
+    container_name: pill-reminder-api
     build: 
       context: .
       dockerfile: ./apps/api/Dockerfile
     ports:
       - "3333:3333"
     environment:
-      - DATABASE_URL=postgresql://postgres:docker@postgres:5432/mestrado?schema=public
-      - API_PORT=3333
+      - DATABASE_URL=postgresql://postgres:docker@postgres:5432/pill-reminder?schema=public
+      - BACKEND_PORT=3333
       - JWT_SECRET=FsU+fWhWKllMX3QDP1I8NDuDDZhJygG/+2LKYU4OzvM=
       - JWT_TOKEN_EXPIRES_IN=15s
       - JWT_REFRESH_TOKEN_EXPIRES_IN_DAYS=30
       - GOOGLE_CLIENT_ID=fake-client.apps.googleusercontent.com
       - GOOGLE_CLIENT_SECRET=fake-google-client-secret
       - GOOGLE_CLIENT_CALLBACK_URL=http://localhost:3333/session/google/callback
-      - API_APP_NAME=Mestrado
-      - WEB_APP_URL=http://localhost:3000
+      - BACKEND_NAME=PillReminder
+      - FRONTEND_URL=http://localhost:3000
     networks:
-      - mestrado-network
+      - pill-reminder-network
     depends_on:
       - postgres
 
 networks:
-  mestrado-network:
+  pill-reminder-network:
     driver: bridge
 
 volumes:

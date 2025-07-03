@@ -13,7 +13,7 @@ export class CreatePatientSessionController {
     private createPatientSessionUseCase: CreatePatientSessionUseCase,
   ) {}
 
-  @Post(Routes.SESSION.PATIENT.LOGIN)
+  @Post(Routes.SESSION.PATIENT.CREATE)
   @HttpCode(200)
   async handle(
     @Body(createPatientSessionValidator) data: CreatePatientSessionBodySchema,

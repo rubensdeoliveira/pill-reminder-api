@@ -11,7 +11,7 @@ export class CreateDentistSessionWithGoogleController {
     private cookies: CookiesGateway,
   ) {}
 
-  @Get(Routes.SESSION.DENTIST.GOOGLE.LOGIN)
+  @Get(Routes.SESSION.DENTIST.GOOGLE.CREATE)
   @UseGuards(GoogleGuard)
   async googleAuth() {}
 
@@ -25,7 +25,7 @@ export class CreateDentistSessionWithGoogleController {
     res.cookie(this.cookies.get('REFRESH_TOKEN'), refreshToken, cookiesOptions)
     res.cookie(this.cookies.get('ACCESS_TOKEN'), accessToken, cookiesOptions)
 
-    const redirectUrl = this.config.get('WEB_APP_URL')
+    const redirectUrl = this.config.get('FRONTEND_URL')
     return res.redirect(302, redirectUrl)
   }
 }
