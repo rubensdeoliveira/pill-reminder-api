@@ -1,30 +1,26 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import { EncryptionGateway } from '@/_shared/gateways/encryption.gateway'
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import {
   CreateDentistSessionUseCaseInput,
   CreateDentistSessionUseCaseOutput,
 } from '@/auth/dtos/create-dentist-session.dto'
+import { DentistRepository } from '@/dentist/repositories/dentist.repository'
 
 @Injectable()
 export class CreateDentistSessionUseCase {
   constructor(
-    private prisma: PrismaService,
+    private dentistRepository: DentistRepository,
     private encryptionGateway: EncryptionGateway,
     private jwtGateway: JwtGateway,
   ) {}
 
   async execute(
-    data: CreateDentistSessionUseCaseInput,
+    input: CreateDentistSessionUseCaseInput,
   ): Promise<CreateDentistSessionUseCaseOutput> {
-    const { email, password } = data
-
-    const account = await this.prisma.account.findFirst({
-      where: {
-        email,
-      },
+    const account = await this.dentistRepository.findByEmail({
+      email: input.email,
     })
     if (!account || !account.password) {
       throw new ConflictException('Email/password does not matches')
@@ -32,7 +28,7 @@ export class CreateDentistSessionUseCase {
 
     const passwordIsMatched = await this.encryptionGateway.validateHash({
       hashedValue: account.password,
-      value: password,
+      value: input.password,
     })
     if (!passwordIsMatched) {
       throw new ConflictException('Email/password does not matches')
@@ -44,10 +40,10 @@ export class CreateDentistSessionUseCase {
         role: account.role,
       })
 
-    const { id, name, phone, dob } = account
+    const { id, name, email, phone, dob, role } = account
 
     return {
-      account: { email, id, name, phone, dob },
+      account: { email, id, name, phone, dob, role },
       accessToken,
       refreshToken,
     }

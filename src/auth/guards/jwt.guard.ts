@@ -33,8 +33,6 @@ export class JwtGuard extends AuthGuard('jwt') {
     const { sub } = request.user
     const accountInfo = JSON.parse(sub)
 
-    console.log(roles, accountInfo.role)
-
     if (!roles || roles.length === 0) return true
 
     const hasRole = roles.includes(accountInfo.role)

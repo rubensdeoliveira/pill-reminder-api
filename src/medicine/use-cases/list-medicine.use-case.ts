@@ -1,14 +1,22 @@
 import { Injectable } from '@nestjs/common'
 
-import { PaginationInput } from '@/_shared/dtos/pagination.dto'
-import { PaginationUseCase } from '@/_shared/use-cases/pagination.use-case'
-import { ListMedicineOutput } from '@/medicine/dtos/list-medicine.dto'
+import { SharedRepository } from '@/_shared/repositories/shared.repository'
+import {
+  ListMedicineInput,
+  ListMedicineOutput,
+} from '@/medicine/dtos/list-medicine.dto'
+import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
 @Injectable()
 export class ListMedicineUseCase {
-  constructor(private paginationUseCase: PaginationUseCase) {}
+  constructor(private sharedRepository: SharedRepository) {}
 
-  async execute(input: PaginationInput): Promise<ListMedicineOutput> {
-    return this.paginationUseCase.execute('medicine', input)
+  async execute(input: ListMedicineInput): Promise<ListMedicineOutput> {
+    const medicineList =
+      await this.sharedRepository.listPaginated<MedicineEntity>(
+        'medicine',
+        input,
+      )
+    return medicineList
   }
 }

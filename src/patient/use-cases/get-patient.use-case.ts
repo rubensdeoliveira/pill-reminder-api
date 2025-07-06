@@ -1,28 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import {
   GetPatientUseCaseInput,
   GetPatientUseCaseOutput,
 } from '@/patient/dtos/get-patient.dto'
+import { PatientRepository } from '@/patient/repositories/patient.repository'
 
 @Injectable()
 export class GetPatientUseCase {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly patientRepository: PatientRepository) {}
 
   async execute(
-    data: GetPatientUseCaseInput,
+    input: GetPatientUseCaseInput,
   ): Promise<GetPatientUseCaseOutput> {
-    const { accountId } = data
-    const account = await this.prisma.account.findUnique({
-      where: {
-        id: accountId,
-      },
+    const account = await this.patientRepository.findById({
+      id: input.accountId,
     })
     if (!account || !account.phone || !account.dob) {
       throw new NotFoundException('Account does not exists')
     }
-    const { email, id, name, phone, dob } = account
-    return { email, id, name, phone, dob }
+    const { email, id, name, phone, dob, role } = account
+    return { email, id, name, phone, dob, role }
   }
 }

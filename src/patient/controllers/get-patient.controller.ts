@@ -13,7 +13,7 @@ import { GetPatientUseCase } from '@/patient/use-cases/get-patient.use-case'
 export class GetPatientController {
   constructor(private readonly getPatientUseCase: GetPatientUseCase) {}
 
-  @Get(Routes.PATIENT.GET)
+  @Get(Routes.PATIENT.ME)
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
     const getAccount = await this.getPatientUseCase.execute({

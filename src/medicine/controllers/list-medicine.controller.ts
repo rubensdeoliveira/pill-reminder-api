@@ -1,7 +1,7 @@
 import { Controller, Get, HttpCode, Query, UseGuards } from '@nestjs/common'
-import { Role } from '@prisma/client'
 
 import { Routes } from '@/_shared/constants/routes'
+import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   PaginationBodySchema,
   paginationValidator,
@@ -16,7 +16,7 @@ import { ListMedicineUseCase } from '@/medicine/use-cases/list-medicine.use-case
 
 @Controller()
 @UseGuards(JwtGuard)
-@Roles(Role.DENTIST, Role.ADMIN)
+@Roles(AccountRole.DENTIST, AccountRole.ADMIN)
 export class ListMedicineController {
   constructor(private listMedicineUseCase: ListMedicineUseCase) {}
 

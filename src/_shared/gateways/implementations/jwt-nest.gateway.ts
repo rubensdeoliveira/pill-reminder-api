@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import { DateManipulatorGateway } from '@/_shared/gateways/date-manipulator.gateway'
 import { EnvGateway } from '@/_shared/gateways/env.gateway'
 import {
@@ -13,13 +12,14 @@ import {
   JwtVerifyRequest,
   JwtVerifyResponse,
 } from '@/_shared/gateways/jwt.gateway'
+import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
 
 @Injectable()
 export class JwtNestGateway implements JwtGateway {
   constructor(
     private jwt: JwtService,
     private dateManipulatorGateway: DateManipulatorGateway,
-    private prisma: PrismaService,
+    private accountTokenRepository: AccountTokenRepository,
     private config: EnvGateway,
   ) {}
 
@@ -67,12 +67,10 @@ export class JwtNestGateway implements JwtGateway {
       days: refreshTokenExpiresInDays,
     })
 
-    await this.prisma.accountToken.create({
-      data: {
-        expiresDate,
-        refreshToken,
-        accountId: payload.accountId,
-      },
+    await this.accountTokenRepository.create({
+      accountId: payload.accountId,
+      refreshToken,
+      expiresDate,
     })
 
     return {

@@ -1,4 +1,10 @@
-type Role = 'ADMIN' | 'PATIENT' | 'DENTIST'
+export enum AccountRole {
+  ADMIN = 'ADMIN',
+  PATIENT = 'PATIENT',
+  DENTIST = 'DENTIST',
+}
+
+export type AccountRoleType = keyof typeof AccountRole
 
 export type JwtSignRequest = {
   payload: JwtPayload
@@ -11,7 +17,7 @@ export type JwtVerifyResponse = JwtPayload
 
 export type JwtPayload = {
   accountId: string
-  role: Role
+  role: AccountRoleType
 }
 
 export type JwtGenerateAuthTokensResponse = {

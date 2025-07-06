@@ -14,11 +14,15 @@ import { CreateDentistSessionUseCase } from '@/auth/use-cases/create-dentist-ses
 import { CreateDentistSessionWithGoogleUseCase } from '@/auth/use-cases/create-dentist-session-with-google.use-case'
 import { CreatePatientSessionUseCase } from '@/auth/use-cases/create-patient-session.use-case'
 import { RefreshSessionUseCase } from '@/auth/use-cases/refresh-session.use-case'
+import { DentistModule } from '@/dentist/dentist.module'
+import { PatientModule } from '@/patient/patient.module'
 
 @Module({
   imports: [
     SharedModule,
     PassportModule,
+    DentistModule,
+    PatientModule,
     JwtModule.registerAsync({
       global: true,
       useFactory: async (configService: ConfigService) => ({

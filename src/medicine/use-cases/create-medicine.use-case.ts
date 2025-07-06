@@ -1,22 +1,20 @@
 import { Injectable } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import {
   CreateMedicineUseCaseInput,
   CreateMedicineUseCaseOutput,
 } from '@/medicine/dtos/create-medicine.dto'
+import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 
 @Injectable()
 export class CreateMedicineUseCase {
-  constructor(private prisma: PrismaService) {}
+  constructor(private medicineRepository: MedicineRepository) {}
 
-  async execute({
-    ...data
-  }: CreateMedicineUseCaseInput): Promise<CreateMedicineUseCaseOutput> {
-    const { name } = await this.prisma.medicine.create({
-      data,
-    })
+  async execute(
+    input: CreateMedicineUseCaseInput,
+  ): Promise<CreateMedicineUseCaseOutput> {
+    const medicine = await this.medicineRepository.create(input)
 
-    return { name }
+    return medicine
   }
 }

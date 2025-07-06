@@ -1,30 +1,23 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import {
   CreatePatientSessionUseCaseInput,
   CreatePatientSessionUseCaseOutput,
 } from '@/auth/dtos/create-patient-session.dto'
+import { PatientRepository } from '@/patient/repositories/patient.repository'
 
 @Injectable()
 export class CreatePatientSessionUseCase {
   constructor(
-    private prisma: PrismaService,
+    private patientRepository: PatientRepository,
     private jwtGateway: JwtGateway,
   ) {}
 
   async execute(
-    data: CreatePatientSessionUseCaseInput,
+    input: CreatePatientSessionUseCaseInput,
   ): Promise<CreatePatientSessionUseCaseOutput> {
-    const { phone, dob } = data
-
-    const account = await this.prisma.account.findFirst({
-      where: {
-        phone,
-        dob,
-      },
-    })
+    const account = await this.patientRepository.findByPhoneAndDob(input)
     if (!account || !account.phone || !account.dob) {
       throw new ConflictException('Patient account does not exists')
     }
@@ -35,10 +28,10 @@ export class CreatePatientSessionUseCase {
         role: account.role,
       })
 
-    const { id, name, email } = account
+    const { id, name, email, phone, dob, role } = account
 
     return {
-      account: { email, id, name, phone, dob },
+      account: { email, id, name, phone, dob, role },
       accessToken,
       refreshToken,
     }

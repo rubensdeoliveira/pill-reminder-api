@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
-import { Role } from '@prisma/client'
 
 import { Routes } from '@/_shared/constants/routes'
+import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   CurrentAccount,
   CurrentAccountType,
@@ -16,7 +16,7 @@ import {
 
 @Controller()
 @UseGuards(JwtGuard)
-@Roles(Role.DENTIST, Role.ADMIN)
+@Roles(AccountRole.DENTIST, AccountRole.ADMIN)
 export class CreateMedicineController {
   constructor(private createMedicineUseCase: CreateMedicineUseCase) {}
 

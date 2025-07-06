@@ -13,7 +13,7 @@ import { GetDentistUseCase } from '@/dentist/use-cases/get-dentist.use-case'
 export class GetDentistController {
   constructor(private readonly getDentistUseCase: GetDentistUseCase) {}
 
-  @Get(Routes.DENTIST.GET)
+  @Get(Routes.DENTIST.ME)
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
     const getAccount = await this.getDentistUseCase.execute({

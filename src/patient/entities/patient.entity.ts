@@ -1,7 +1,10 @@
+import { AccountRoleType } from '@/_shared/gateways/jwt.gateway'
+
 export type PatientEntity = {
   id: string
   name: string
   email: string | null
-  phone: string
-  dob: Date
+  phone: string | null
+  dob: Date | null
+  role: AccountRoleType
 }

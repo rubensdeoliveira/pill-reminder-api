@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcryptjs'
 
@@ -40,9 +39,22 @@ async function main() {
     uniqueAttributeToCheck: 'email',
     data: [
       {
-        name: faker.person.fullName(),
-        email: 'academy@fr.com',
+        name: 'Luísa Braga',
+        email: 'luisa@gmail.com',
         password: await hash('devdevdev', 8),
+        role: 'ADMIN',
+      },
+      {
+        name: 'Rubens Junior',
+        email: 'rubens@gmail.com',
+        password: await hash('devdevdev', 8),
+        role: 'DENTIST',
+      },
+      {
+        name: 'Guilherme Rubens',
+        phone: '84988950606',
+        dob: '2016-06-23',
+        role: 'PATIENT',
       },
     ],
   })

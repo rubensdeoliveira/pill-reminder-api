@@ -1,22 +1,19 @@
 import { Injectable } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
-import {
-  DeleteMedicineUseCaseInput,
-  DeleteMedicineUseCaseOutput,
-} from '@/medicine/dtos/delete-medicine.dto'
+import { DeleteMedicineUseCaseInput } from '@/medicine/dtos/delete-medicine.dto'
+import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 
 @Injectable()
 export class DeleteMedicineUseCase {
-  constructor(private prisma: PrismaService) {}
+  constructor(private medicineRepository: MedicineRepository) {}
 
-  async execute({
-    id,
-  }: DeleteMedicineUseCaseInput): Promise<DeleteMedicineUseCaseOutput> {
-    await this.prisma.medicine.delete({
-      where: { id },
-    })
+  async execute(input: DeleteMedicineUseCaseInput): Promise<void> {
+    const medicine = await this.medicineRepository.findById(input)
 
-    return { id }
+    if (!medicine) {
+      throw new Error('Medicine not found')
+    }
+
+    await this.medicineRepository.delete(input)
   }
 }

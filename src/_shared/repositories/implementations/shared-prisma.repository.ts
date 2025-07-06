@@ -2,20 +2,21 @@ import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import {
-  PaginationInput,
-  PaginationOutput,
-} from '@/_shared/dtos/pagination.dto'
+  ListPaginatedInput,
+  ListPaginatedOutput,
+  SharedRepository,
+} from '@/_shared/repositories/shared.repository'
 
 @Injectable()
-export class PaginationUseCase {
+export class SharedPrismaRepository implements SharedRepository {
   constructor(private prisma: PrismaService) {}
 
-  async execute<T>(
+  async listPaginated<T>(
     model: string,
-    input: PaginationInput,
+    input: ListPaginatedInput,
     orderBy: Record<string, 'asc' | 'desc'> = { createdAt: 'desc' },
     where?: Record<string, any>,
-  ): Promise<PaginationOutput<T>> {
+  ): Promise<ListPaginatedOutput<T>> {
     const { page = 1, itemsPerPage = 10 } = input
     const skip = (page - 1) * itemsPerPage
 

@@ -1,44 +1,39 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import {
   CreatePatientUseCaseInput,
   CreatePatientUseCaseOutput,
 } from '@/patient/dtos/create-patient.dto'
+import { PatientRepository } from '@/patient/repositories/patient.repository'
 
 @Injectable()
 export class CreatePatientUseCase {
-  constructor(private prisma: PrismaService) {}
+  constructor(private patientRepository: PatientRepository) {}
 
   async execute(
-    data: CreatePatientUseCaseInput,
+    input: CreatePatientUseCaseInput,
   ): Promise<CreatePatientUseCaseOutput> {
-    const { email, name, dob, phone } = data
-
-    const accountWithSameEmail = await this.prisma.account.findFirst({
-      where: {
-        email,
-      },
-    })
-    if (accountWithSameEmail) {
-      throw new ConflictException('Account with same email already exists')
+    const accountWithSameInfo =
+      await this.patientRepository.findByPhoneAndDob(input)
+    if (accountWithSameInfo) {
+      throw new ConflictException(
+        'Account with same phone and dob already exists',
+      )
     }
 
-    const { id } = await this.prisma.account.create({
-      data: {
-        email,
-        name,
-        phone,
-        dob,
-      },
-    })
+    const { id, email, role, name, phone, dob } =
+      await this.patientRepository.create({
+        ...input,
+        password: null,
+      })
 
     return {
-      email,
-      name,
       id,
+      name,
+      email,
       phone,
       dob,
+      role,
     }
   }
 }

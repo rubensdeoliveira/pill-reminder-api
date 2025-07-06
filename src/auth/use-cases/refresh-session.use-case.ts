@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 
-import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
+import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
 import {
   RefreshSessionUseCaseInput,
   RefreshSessionUseCaseOutput,
@@ -10,38 +10,27 @@ import {
 @Injectable()
 export class RefreshSessionUseCase {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly accountTokenRepository: AccountTokenRepository,
     private readonly jwtGateway: JwtGateway,
   ) {}
 
   async execute(
-    data: RefreshSessionUseCaseInput,
+    input: RefreshSessionUseCaseInput,
   ): Promise<RefreshSessionUseCaseOutput> {
-    const { token } = data
-
+    const token = input.token
     const { accountId } = this.jwtGateway.verify(token)
 
-    const accountToken = await this.prisma.accountToken.findUnique({
-      where: {
+    const accountToken =
+      await this.accountTokenRepository.findByAccountIdAndRefreshToken({
         accountId,
         refreshToken: token,
-      },
-      include: {
-        account: {
-          select: {
-            role: true,
-          },
-        },
-      },
-    })
+      })
     if (!accountToken) {
       throw new UnauthorizedException('Invalid refresh token')
     }
 
-    await this.prisma.accountToken.delete({
-      where: {
-        id: accountToken.id,
-      },
+    await this.accountTokenRepository.deleteById({
+      id: accountToken.id,
     })
 
     const { accessToken, refreshToken } =

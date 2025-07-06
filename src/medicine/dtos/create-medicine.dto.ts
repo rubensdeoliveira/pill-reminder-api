@@ -3,5 +3,6 @@ export type CreateMedicineUseCaseInput = {
 }
 
 export type CreateMedicineUseCaseOutput = {
+  id: string
   name: string
 }

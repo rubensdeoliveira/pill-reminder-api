@@ -11,38 +11,52 @@ import { EncryptionBcryptGateway } from '@/_shared/gateways/implementations/encr
 import { EnvNestGateway } from '@/_shared/gateways/implementations/env-nest.gateway'
 import { JwtNestGateway } from '@/_shared/gateways/implementations/jwt-nest.gateway'
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
+import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
+import { AccountTokenPrismaRepository } from '@/_shared/repositories/implementations/account-token-prisma.repository'
+import { SharedPrismaRepository } from '@/_shared/repositories/implementations/shared-prisma.repository'
+import { SharedRepository } from '@/_shared/repositories/shared.repository'
 
 @Module({
   providers: [
+    PrismaService,
     {
       provide: CookiesGateway,
       useClass: CookiesNestGateway,
-    },
-    {
-      provide: EncryptionGateway,
-      useClass: EncryptionBcryptGateway,
-    },
-    {
-      provide: JwtGateway,
-      useClass: JwtNestGateway,
     },
     {
       provide: DateManipulatorGateway,
       useClass: DateManipulatorDateFnsGateway,
     },
     {
+      provide: EncryptionGateway,
+      useClass: EncryptionBcryptGateway,
+    },
+    {
       provide: EnvGateway,
       useClass: EnvNestGateway,
     },
-    PrismaService,
+    {
+      provide: JwtGateway,
+      useClass: JwtNestGateway,
+    },
+    {
+      provide: AccountTokenRepository,
+      useClass: AccountTokenPrismaRepository,
+    },
+    {
+      provide: SharedRepository,
+      useClass: SharedPrismaRepository,
+    },
   ],
   exports: [
-    CookiesGateway,
-    EncryptionGateway,
-    JwtGateway,
-    DateManipulatorGateway,
-    EnvGateway,
     PrismaService,
+    CookiesGateway,
+    DateManipulatorGateway,
+    EncryptionGateway,
+    EnvGateway,
+    JwtGateway,
+    AccountTokenRepository,
+    SharedRepository,
   ],
 })
 export class SharedModule {}

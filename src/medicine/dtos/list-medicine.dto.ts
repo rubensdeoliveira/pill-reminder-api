@@ -1,4 +1,9 @@
-import { PaginationOutput } from '@/_shared/dtos/pagination.dto'
+import {
+  ListPaginatedInput,
+  ListPaginatedOutput,
+} from '@/_shared/repositories/shared.repository'
 import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
-export type ListMedicineOutput = PaginationOutput<MedicineEntity>
+export type ListMedicineInput = ListPaginatedInput
+
+export type ListMedicineOutput = ListPaginatedOutput<MedicineEntity>

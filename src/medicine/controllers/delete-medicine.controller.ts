@@ -1,7 +1,7 @@
 import { Controller, Delete, HttpCode, Param, UseGuards } from '@nestjs/common'
-import { Role } from '@prisma/client'
 
 import { Routes } from '@/_shared/constants/routes'
+import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   ParamBodySchema,
   paramValidator,
@@ -16,7 +16,7 @@ import { DeleteMedicineUseCase } from '@/medicine/use-cases/delete-medicine.use-
 
 @Controller()
 @UseGuards(JwtGuard)
-@Roles(Role.DENTIST, Role.ADMIN)
+@Roles(AccountRole.DENTIST, AccountRole.ADMIN)
 export class DeleteMedicineController {
   constructor(private deleteMedicineUseCase: DeleteMedicineUseCase) {}
 
