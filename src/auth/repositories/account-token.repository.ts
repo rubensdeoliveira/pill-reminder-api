@@ -1,4 +1,5 @@
-import { AccountRoleType } from '@/_shared/gateways/jwt.gateway'
+import { AccountTokenEntity } from '@/auth/entities/account-token.entity'
+import { AccountRoleType } from '@/auth/gateways/jwt.gateway'
 
 export abstract class AccountTokenRepository {
   abstract create(
@@ -14,13 +15,9 @@ export abstract class AccountTokenRepository {
   ): Promise<FindByAccountIdAndRefreshTokenAccountTokenRepositoryOutput>
 }
 
-export type CreateAccountTokenRepositoryInput = {
-  accountId: string
-  refreshToken: string
-  expiresDate: Date
-}
+export type CreateAccountTokenRepositoryInput = Omit<AccountTokenEntity, 'id'>
 
-export type CreateAccountTokenRepositoryOutput = void
+export type CreateAccountTokenRepositoryOutput = AccountTokenEntity
 
 export type DeleteByIdAccountTokenRepositoryInput = {
   id: string
@@ -33,9 +30,13 @@ export type FindByAccountIdAndRefreshTokenAccountTokenRepositoryInput = {
   refreshToken: string
 }
 
-export type FindByAccountIdAndRefreshTokenAccountTokenRepositoryOutput = {
-  id: string
+export type FindByAccountIdAndRefreshTokenAccountTokenRepositoryOutput =
+  AccountTokenWithAccountRoleEntity | null
+
+// Auxiliary types
+
+type AccountTokenWithAccountRoleEntity = AccountTokenEntity & {
   account: {
     role: AccountRoleType
   }
-} | null
+}

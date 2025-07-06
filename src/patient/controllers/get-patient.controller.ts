@@ -16,9 +16,9 @@ export class GetPatientController {
   @Get('/me')
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
-    const getAccount = await this.getPatientUseCase.execute({
+    const patient = await this.getPatientUseCase.execute({
       accountId,
     })
-    return getAccount
+    return patient
   }
 }

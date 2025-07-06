@@ -16,9 +16,9 @@ export class GetDentistController {
   @Get('/me')
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
-    const getAccount = await this.getDentistUseCase.execute({
+    const dentist = await this.getDentistUseCase.execute({
       accountId,
     })
-    return getAccount
+    return dentist
   }
 }

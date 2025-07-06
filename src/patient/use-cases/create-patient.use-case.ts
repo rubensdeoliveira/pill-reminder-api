@@ -1,39 +1,40 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
+import { AccountRepository } from '@/auth/repositories/account.repository'
 import {
   CreatePatientUseCaseInput,
   CreatePatientUseCaseOutput,
 } from '@/patient/dtos/create-patient.dto'
-import { PatientRepository } from '@/patient/repositories/patient.repository'
+import { toPatientOutput } from '@/patient/mappers/patient.mapper'
 
 @Injectable()
 export class CreatePatientUseCase {
-  constructor(private patientRepository: PatientRepository) {}
+  constructor(private accountRepository: AccountRepository) {}
 
-  async execute(
-    input: CreatePatientUseCaseInput,
-  ): Promise<CreatePatientUseCaseOutput> {
-    const accountWithSameInfo =
-      await this.patientRepository.findByPhoneAndDob(input)
-    if (accountWithSameInfo) {
+  async execute({
+    dob,
+    name,
+    phone,
+  }: CreatePatientUseCaseInput): Promise<CreatePatientUseCaseOutput> {
+    const patientWithSameInfo = await this.accountRepository.findByPhoneAndDob({
+      dob,
+      phone,
+    })
+    if (patientWithSameInfo) {
       throw new ConflictException(
-        'Account with same phone and dob already exists',
+        'Patient with same phone and dob already exists',
       )
     }
 
-    const { id, email, role, name, phone, dob } =
-      await this.patientRepository.create({
-        ...input,
-        password: null,
-      })
-
-    return {
-      id,
-      name,
-      email,
-      phone,
+    const patient = await this.accountRepository.create({
       dob,
-      role,
-    }
+      name,
+      phone,
+      email: null,
+      role: 'PATIENT',
+      password: null,
+    })
+
+    return toPatientOutput(patient)
   }
 }

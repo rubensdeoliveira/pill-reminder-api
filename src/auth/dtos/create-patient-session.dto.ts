@@ -1,4 +1,4 @@
-import { PatientEntity } from '@/patient/entities/patient.entity'
+import { PatientOutput } from '@/patient/dtos/patient.dto'
 
 export type CreatePatientSessionUseCaseInput = {
   phone: string
@@ -6,7 +6,7 @@ export type CreatePatientSessionUseCaseInput = {
 }
 
 export type CreatePatientSessionUseCaseOutput = {
-  account: PatientEntity
+  patient: PatientOutput
   accessToken: string
   refreshToken: string
 }

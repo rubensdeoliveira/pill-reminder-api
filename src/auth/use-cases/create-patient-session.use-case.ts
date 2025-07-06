@@ -1,37 +1,40 @@
 import { ConflictException, Injectable } from '@nestjs/common'
 
-import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import {
   CreatePatientSessionUseCaseInput,
   CreatePatientSessionUseCaseOutput,
 } from '@/auth/dtos/create-patient-session.dto'
-import { PatientRepository } from '@/patient/repositories/patient.repository'
+import { JwtGateway } from '@/auth/gateways/jwt.gateway'
+import { AccountRepository } from '@/auth/repositories/account.repository'
+import { toPatientOutput } from '@/patient/mappers/patient.mapper'
 
 @Injectable()
 export class CreatePatientSessionUseCase {
   constructor(
-    private patientRepository: PatientRepository,
+    private accountRepository: AccountRepository,
     private jwtGateway: JwtGateway,
   ) {}
 
-  async execute(
-    input: CreatePatientSessionUseCaseInput,
-  ): Promise<CreatePatientSessionUseCaseOutput> {
-    const account = await this.patientRepository.findByPhoneAndDob(input)
-    if (!account || !account.phone || !account.dob) {
+  async execute({
+    dob,
+    phone,
+  }: CreatePatientSessionUseCaseInput): Promise<CreatePatientSessionUseCaseOutput> {
+    const patient = await this.accountRepository.findByPhoneAndDob({
+      dob,
+      phone,
+    })
+    if (!patient || !patient.phone || !patient.dob) {
       throw new ConflictException('Patient account does not exists')
     }
 
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
-        accountId: account.id,
-        role: account.role,
+        accountId: patient.id,
+        role: patient.role,
       })
 
-    const { id, name, email, phone, dob, role } = account
-
     return {
-      account: { email, id, name, phone, dob, role },
+      patient: toPatientOutput(patient),
       accessToken,
       refreshToken,
     }

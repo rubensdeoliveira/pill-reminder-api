@@ -5,14 +5,14 @@ import { DateManipulatorGateway } from '@/_shared/gateways/date-manipulator.gate
 import { EnvGateway } from '@/_shared/gateways/env.gateway'
 import {
   JwtGateway,
-  JwtGenerateAuthTokensRequest,
-  JwtGenerateAuthTokensResponse,
-  JwtSignRequest,
-  JwtSignResponse,
-  JwtVerifyRequest,
-  JwtVerifyResponse,
-} from '@/_shared/gateways/jwt.gateway'
-import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
+  JwtGenerateAuthTokensInput,
+  JwtGenerateAuthTokensOutput,
+  JwtSignInput,
+  JwtSignOutput,
+  JwtVerifyInput,
+  JwtVerifyOutput,
+} from '@/auth/gateways/jwt.gateway'
+import { AccountTokenRepository } from '@/auth/repositories/account-token.repository'
 
 @Injectable()
 export class JwtNestGateway implements JwtGateway {
@@ -23,7 +23,7 @@ export class JwtNestGateway implements JwtGateway {
     private config: EnvGateway,
   ) {}
 
-  sign({ expiresIn, payload }: JwtSignRequest): JwtSignResponse {
+  sign({ expiresIn, payload }: JwtSignInput): JwtSignOutput {
     const token = this.jwt.sign(
       {
         sub: JSON.stringify(payload),
@@ -35,7 +35,7 @@ export class JwtNestGateway implements JwtGateway {
     return token
   }
 
-  verify(token: JwtVerifyRequest): JwtVerifyResponse {
+  verify(token: JwtVerifyInput): JwtVerifyOutput {
     try {
       const payload = this.jwt.verify(token)
       return JSON.parse(payload.sub)
@@ -45,8 +45,8 @@ export class JwtNestGateway implements JwtGateway {
   }
 
   async generateAuthTokens(
-    payload: JwtGenerateAuthTokensRequest,
-  ): Promise<JwtGenerateAuthTokensResponse> {
+    payload: JwtGenerateAuthTokensInput,
+  ): Promise<JwtGenerateAuthTokensOutput> {
     const tokenExpiresIn = this.config.get('JWT_TOKEN_EXPIRES_IN')
     const refreshTokenExpiresInDays = this.config.get(
       'JWT_REFRESH_TOKEN_EXPIRES_IN_DAYS',

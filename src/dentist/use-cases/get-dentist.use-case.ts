@@ -1,25 +1,27 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 
+import { AccountRepository } from '@/auth/repositories/account.repository'
 import {
   GetDentistUseCaseInput,
   GetDentistUseCaseOutput,
 } from '@/dentist/dtos/get-dentist.dto'
-import { DentistRepository } from '@/dentist/repositories/dentist.repository'
+import { toDentistOutput } from '@/dentist/mappers/dentist.mapper'
 
 @Injectable()
 export class GetDentistUseCase {
-  constructor(private readonly dentistRepository: DentistRepository) {}
+  constructor(private readonly accountRepository: AccountRepository) {}
 
-  async execute(
-    input: GetDentistUseCaseInput,
-  ): Promise<GetDentistUseCaseOutput> {
-    const account = await this.dentistRepository.findById({
-      id: input.accountId,
+  async execute({
+    accountId,
+  }: GetDentistUseCaseInput): Promise<GetDentistUseCaseOutput> {
+    const dentist = await this.accountRepository.findById({
+      id: accountId,
     })
-    if (!account || !account.email) {
-      throw new NotFoundException('Account does not exists')
+
+    if (!dentist || !dentist.email) {
+      throw new NotFoundException('Dentist does not exists')
     }
-    const { email, id, name, phone, dob, role } = account
-    return { email, id, name, phone, dob, role }
+
+    return toDentistOutput(dentist)
   }
 }

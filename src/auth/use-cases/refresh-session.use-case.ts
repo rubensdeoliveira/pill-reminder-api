@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common'
 
-import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
-import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
 import {
   RefreshSessionUseCaseInput,
   RefreshSessionUseCaseOutput,
 } from '@/auth/dtos/refresh-session.dto'
+import { JwtGateway } from '@/auth/gateways/jwt.gateway'
+import { AccountTokenRepository } from '@/auth/repositories/account-token.repository'
 
 @Injectable()
 export class RefreshSessionUseCase {
@@ -14,10 +14,9 @@ export class RefreshSessionUseCase {
     private readonly jwtGateway: JwtGateway,
   ) {}
 
-  async execute(
-    input: RefreshSessionUseCaseInput,
-  ): Promise<RefreshSessionUseCaseOutput> {
-    const token = input.token
+  async execute({
+    token,
+  }: RefreshSessionUseCaseInput): Promise<RefreshSessionUseCaseOutput> {
     const { accountId } = this.jwtGateway.verify(token)
 
     const accountToken =

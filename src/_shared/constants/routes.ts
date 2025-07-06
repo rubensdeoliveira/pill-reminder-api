@@ -3,5 +3,4 @@ export const routes = {
   dentist: '/dentist',
   medicine: '/medicine',
   patient: '/patient',
-  test: '/test',
 }

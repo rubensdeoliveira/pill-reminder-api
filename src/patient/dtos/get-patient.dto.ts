@@ -1,5 +1,5 @@
-import { PatientEntity } from '@/patient/entities/patient.entity'
+import { PatientOutput } from '@/patient/dtos/patient.dto'
 
 export type GetPatientUseCaseInput = { accountId: string }
 
-export type GetPatientUseCaseOutput = PatientEntity
+export type GetPatientUseCaseOutput = PatientOutput

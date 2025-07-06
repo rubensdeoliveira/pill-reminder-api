@@ -14,7 +14,7 @@ export class CreatePatientController {
   @Post()
   @HttpCode(201)
   async handle(@Body(createPatientValidator) data: CreatePatientBodySchema) {
-    const account = await this.createPatientUseCase.execute(data)
-    return account
+    const patient = await this.createPatientUseCase.execute(data)
+    return patient
   }
 }

@@ -1,4 +1,6 @@
-export const COOKIES_GATEWAY = Symbol('COOKIES_GATEWAY')
+export abstract class CookiesGateway {
+  abstract get<T extends keyof CookiesModel>(key: T): CookiesModel[T]
+}
 
 export type CookiesModel = {
   REFRESH_TOKEN: string
@@ -9,8 +11,4 @@ export type CookiesModel = {
     maxAge: number
     path: string
   }
-}
-
-export abstract class CookiesGateway {
-  abstract get<T extends keyof CookiesModel>(key: T): CookiesModel[T]
 }

@@ -3,6 +3,7 @@ import { addDays } from 'date-fns'
 
 import {
   AddDaysInput,
+  AddDaysOutput,
   DateManipulatorGateway,
 } from '@/_shared/gateways/date-manipulator.gateway'
 
@@ -10,7 +11,7 @@ import {
 export class DateManipulatorDateFnsGateway implements DateManipulatorGateway {
   constructor() {}
 
-  addDays({ date, days }: AddDaysInput): Date {
+  addDays({ date, days }: AddDaysInput): AddDaysOutput {
     const dateWithAddedDays = addDays(date, days)
     return dateWithAddedDays
   }

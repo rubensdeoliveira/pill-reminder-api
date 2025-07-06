@@ -1,12 +1,13 @@
+import { DentistOutput } from '@/dentist/dtos/dentist.dto'
 import { DentistEntity } from '@/dentist/entities/dentist.entity'
 
-export type CreateDentistUseCaseInput = {
-  name: string
+export type CreateDentistUseCaseInput = Pick<
+  DentistEntity,
+  'name' | 'phone' | 'dob'
+> & {
+  confirmPassword: string
   email: string
   password: string
-  confirmPassword: string
-  phone: string
-  dob: Date
 }
 
-export type CreateDentistUseCaseOutput = DentistEntity
+export type CreateDentistUseCaseOutput = DentistOutput

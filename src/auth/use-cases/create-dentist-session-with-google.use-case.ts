@@ -1,30 +1,34 @@
 import { Injectable } from '@nestjs/common'
 
-import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import {
   CreateDentistSessionWithGoogleUseCaseInput,
   CreateDentistSessionWithGoogleUseCaseOutput,
 } from '@/auth/dtos/create-dentist-session-with-google.dto'
+import { JwtGateway } from '@/auth/gateways/jwt.gateway'
+import { AccountRepository } from '@/auth/repositories/account.repository'
 import { DentistEntity } from '@/dentist/entities/dentist.entity'
-import { DentistRepository } from '@/dentist/repositories/dentist.repository'
+import { toDentistOutput } from '@/dentist/mappers/dentist.mapper'
 
 @Injectable()
 export class CreateDentistSessionWithGoogleUseCase {
   constructor(
-    private dentistRepository: DentistRepository,
+    private accountRepository: AccountRepository,
     private jwtGateway: JwtGateway,
   ) {}
 
-  async execute(
-    input: CreateDentistSessionWithGoogleUseCaseInput,
-  ): Promise<CreateDentistSessionWithGoogleUseCaseOutput> {
-    let account: DentistEntity | null =
-      await this.dentistRepository.findByEmail({
-        email: input.email,
+  async execute({
+    email,
+    name,
+  }: CreateDentistSessionWithGoogleUseCaseInput): Promise<CreateDentistSessionWithGoogleUseCaseOutput> {
+    let dentist: DentistEntity | null =
+      await this.accountRepository.findByEmail({
+        email,
       })
-    if (!account) {
-      account = await this.dentistRepository.create({
-        ...input,
+    if (!dentist) {
+      dentist = await this.accountRepository.create({
+        email,
+        name,
+        role: 'DENTIST',
         dob: null,
         phone: null,
         password: null,
@@ -33,19 +37,12 @@ export class CreateDentistSessionWithGoogleUseCase {
 
     const { accessToken, refreshToken } =
       await this.jwtGateway.generateAuthTokens({
-        accountId: account.id,
-        role: account.role,
+        accountId: dentist.id,
+        role: dentist.role,
       })
 
     return {
-      account: {
-        id: account.id,
-        name: account.name,
-        email: account.email,
-        phone: account.phone,
-        dob: account.dob,
-        role: account.role,
-      },
+      dentist: toDentistOutput(dentist),
       accessToken,
       refreshToken,
     }

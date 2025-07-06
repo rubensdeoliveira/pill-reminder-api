@@ -1,3 +1,7 @@
+export abstract class EnvGateway {
+  abstract get<T extends keyof AppConfigModel>(key: T): AppConfigModel[T]
+}
+
 export type AppConfigModel = {
   DATABASE_URL: string
   BACKEND_PORT: number
@@ -9,8 +13,4 @@ export type AppConfigModel = {
   GOOGLE_CLIENT_CALLBACK_URL: string
   BACKEND_NAME: string
   FRONTEND_URL: string
-}
-
-export abstract class EnvGateway {
-  abstract get<T extends keyof AppConfigModel>(key: T): AppConfigModel[T]
 }

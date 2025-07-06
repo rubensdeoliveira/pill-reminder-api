@@ -1,10 +1,3 @@
-import { AccountRoleType } from '@/_shared/gateways/jwt.gateway'
+import { AccountEntity } from '@/auth/entities/account.entity'
 
-export type PatientEntity = {
-  id: string
-  name: string
-  email: string | null
-  phone: string | null
-  dob: Date | null
-  role: AccountRoleType
-}
+export type PatientEntity = AccountEntity

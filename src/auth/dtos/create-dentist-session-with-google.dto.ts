@@ -1,4 +1,4 @@
-import { DentistEntity } from '@/dentist/entities/dentist.entity'
+import { DentistOutput } from '@/dentist/dtos/dentist.dto'
 
 export type CreateDentistSessionWithGoogleUseCaseInput = {
   email: string
@@ -6,7 +6,7 @@ export type CreateDentistSessionWithGoogleUseCaseInput = {
 }
 
 export type CreateDentistSessionWithGoogleUseCaseOutput = {
-  account: DentistEntity
+  dentist: DentistOutput
   accessToken: string
   refreshToken: string
 }

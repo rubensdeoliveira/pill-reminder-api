@@ -9,7 +9,7 @@ import {
   DeleteByIdAccountTokenRepositoryOutput,
   FindByAccountIdAndRefreshTokenAccountTokenRepositoryInput,
   FindByAccountIdAndRefreshTokenAccountTokenRepositoryOutput,
-} from '@/_shared/repositories/account-token.repository'
+} from '@/auth/repositories/account-token.repository'
 
 @Injectable()
 export class AccountTokenPrismaRepository implements AccountTokenRepository {
@@ -18,9 +18,10 @@ export class AccountTokenPrismaRepository implements AccountTokenRepository {
   async create(
     data: CreateAccountTokenRepositoryInput,
   ): Promise<CreateAccountTokenRepositoryOutput> {
-    await this.prisma.accountToken.create({
+    const accountToken = await this.prisma.accountToken.create({
       data,
     })
+    return accountToken
   }
 
   async deleteById(
@@ -44,10 +45,6 @@ export class AccountTokenPrismaRepository implements AccountTokenRepository {
         },
       },
     })
-    if (!accountToken) {
-      return null
-    }
-    const { id, account } = accountToken
-    return { id, account }
+    return accountToken
   }
 }
