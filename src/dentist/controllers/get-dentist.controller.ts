@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import {
   CurrentAccount,
   CurrentAccountType,
@@ -13,7 +13,7 @@ import { GetDentistUseCase } from '@/dentist/use-cases/get-dentist.use-case'
 export class GetDentistController {
   constructor(private readonly getDentistUseCase: GetDentistUseCase) {}
 
-  @Get(Routes.DENTIST.ME)
+  @Get(ROUTES.DENTIST.ME)
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
     const getAccount = await this.getDentistUseCase.execute({

@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, Query, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   PaginationBodySchema,
@@ -20,7 +20,7 @@ import { ListMedicineUseCase } from '@/medicine/use-cases/list-medicine.use-case
 export class ListMedicineController {
   constructor(private listMedicineUseCase: ListMedicineUseCase) {}
 
-  @Get(Routes.MEDICINE.LIST)
+  @Get(ROUTES.MEDICINE.LIST)
   @HttpCode(200)
   async handle(
     @CurrentAccount() account: CurrentAccountType,

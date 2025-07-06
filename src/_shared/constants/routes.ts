@@ -1,4 +1,4 @@
-export const Routes = {
+export const ROUTES = {
   AUTH: {
     CREATE_DENTIST_SESSION_GOOGLE: '/auth/dentist/google',
     CREATE_DENTIST_SESSION: '/auth/dentist',

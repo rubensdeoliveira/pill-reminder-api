@@ -1,6 +1,6 @@
 import { Controller, Get, HttpCode, Param, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   ParamBodySchema,
@@ -20,7 +20,7 @@ import { GetMedicineUseCase } from '@/medicine/use-cases/get-medicine.use-case'
 export class GetMedicineController {
   constructor(private getMedicineUseCase: GetMedicineUseCase) {}
 
-  @Get(Routes.MEDICINE.GET)
+  @Get(ROUTES.MEDICINE.GET)
   @HttpCode(200)
   async handle(
     @CurrentAccount() account: CurrentAccountType,

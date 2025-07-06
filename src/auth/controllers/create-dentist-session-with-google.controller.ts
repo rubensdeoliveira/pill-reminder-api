@@ -1,6 +1,6 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { CookiesGateway } from '@/_shared/gateways/cookies.gateway'
 import { EnvGateway } from '@/_shared/gateways/env.gateway'
 import { GoogleGuard } from '@/auth/guards/google.guard'
@@ -12,11 +12,11 @@ export class CreateDentistSessionWithGoogleController {
     private cookies: CookiesGateway,
   ) {}
 
-  @Get(Routes.AUTH.CREATE_DENTIST_SESSION_GOOGLE)
+  @Get(ROUTES.AUTH.CREATE_DENTIST_SESSION_GOOGLE)
   @UseGuards(GoogleGuard)
   async googleAuth() {}
 
-  @Get(Routes.AUTH.CREATE_DENTIST_SESSION_GOOGLE)
+  @Get(ROUTES.AUTH.CREATE_DENTIST_SESSION_GOOGLE)
   @UseGuards(GoogleGuard)
   async googleAuthCallback(@Req() req, @Res() res) {
     const { refreshToken, accessToken } = req.user

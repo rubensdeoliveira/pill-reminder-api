@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { CreateDentistUseCase } from '@/dentist/use-cases/create-dentist.use-case'
 import {
   CreateDentistBodySchema,
@@ -11,7 +11,7 @@ import {
 export class CreateDentistController {
   constructor(private createDentistUseCase: CreateDentistUseCase) {}
 
-  @Post(Routes.DENTIST.CREATE)
+  @Post(ROUTES.DENTIST.CREATE)
   @HttpCode(201)
   async handle(@Body(createDentistValidator) data: CreateDentistBodySchema) {
     const dentist = await this.createDentistUseCase.execute(data)

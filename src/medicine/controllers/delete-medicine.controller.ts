@@ -1,6 +1,6 @@
 import { Controller, Delete, HttpCode, Param, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   ParamBodySchema,
@@ -20,7 +20,7 @@ import { DeleteMedicineUseCase } from '@/medicine/use-cases/delete-medicine.use-
 export class DeleteMedicineController {
   constructor(private deleteMedicineUseCase: DeleteMedicineUseCase) {}
 
-  @Delete(Routes.MEDICINE.DELETE)
+  @Delete(ROUTES.MEDICINE.DELETE)
   @HttpCode(201)
   async handle(
     @CurrentAccount() account: CurrentAccountType,

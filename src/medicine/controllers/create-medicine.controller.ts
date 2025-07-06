@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   CurrentAccount,
@@ -20,7 +20,7 @@ import {
 export class CreateMedicineController {
   constructor(private createMedicineUseCase: CreateMedicineUseCase) {}
 
-  @Post(Routes.MEDICINE.CREATE)
+  @Post(ROUTES.MEDICINE.CREATE)
   @HttpCode(201)
   async handle(
     @CurrentAccount() account: CurrentAccountType,

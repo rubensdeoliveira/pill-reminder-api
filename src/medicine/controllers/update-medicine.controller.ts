@@ -7,7 +7,7 @@ import {
   UseGuards,
 } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { AccountRole } from '@/_shared/gateways/jwt.gateway'
 import {
   ParamBodySchema,
@@ -31,7 +31,7 @@ import {
 export class UpdateMedicineController {
   constructor(private updateMedicineUseCase: UpdateMedicineUseCase) {}
 
-  @Put(Routes.MEDICINE.UPDATE)
+  @Put(ROUTES.MEDICINE.UPDATE)
   @HttpCode(200)
   async handle(
     @CurrentAccount() account: CurrentAccountType,

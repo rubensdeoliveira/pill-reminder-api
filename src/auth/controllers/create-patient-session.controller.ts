@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 
-import { Routes } from '@/_shared/constants/routes'
+import { ROUTES } from '@/_shared/constants/routes'
 import { CreatePatientSessionUseCase } from '@/auth/use-cases/create-patient-session.use-case'
 import {
   CreatePatientSessionBodySchema,
@@ -13,7 +13,7 @@ export class CreatePatientSessionController {
     private createPatientSessionUseCase: CreatePatientSessionUseCase,
   ) {}
 
-  @Post(Routes.AUTH.CREATE_PATIENT_SESSION)
+  @Post(ROUTES.AUTH.CREATE_PATIENT_SESSION)
   @HttpCode(200)
   async handle(
     @Body(createPatientSessionValidator) data: CreatePatientSessionBodySchema,
