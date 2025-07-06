@@ -4,8 +4,8 @@ import { GenericRepository } from '@/_shared/repositories/generic.repository'
 import {
   ListMedicineInput,
   ListMedicineOutput,
-  ListMedicineOutputItem,
 } from '@/medicine/dtos/list-medicine.dto'
+import { MedicineOutput } from '@/medicine/dtos/medicine.dto'
 
 @Injectable()
 export class ListMedicineUseCase {
@@ -16,7 +16,7 @@ export class ListMedicineUseCase {
     page,
   }: ListMedicineInput): Promise<ListMedicineOutput> {
     const medicineListPaginated =
-      await this.genericRepository.listPaginated<ListMedicineOutputItem>({
+      await this.genericRepository.listPaginated<MedicineOutput>({
         model: 'medicine',
         pagination: {
           itemsPerPage,

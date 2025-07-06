@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
-import { GenericRepository } from '@/_shared/repositories/generic.repository'
 import {
+  GenericRepository,
   ListPaginatedInput,
   ListPaginatedOutput,
-} from '@/_shared/repositories/types/list-options'
+} from '@/_shared/repositories/generic.repository'
 
 @Injectable()
 export class GenericPrismaRepository implements GenericRepository {

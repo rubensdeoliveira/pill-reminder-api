@@ -10,9 +10,9 @@ import { Roles } from '@/auth/decorators/roles.decorator'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
 import { CreateMedicineUseCase } from '@/medicine/use-cases/create-medicine.use-case'
 import {
-  CreateMedicineBodySchema,
-  createMedicineValidator,
-} from '@/medicine/validators/create-medicine.validator'
+  SaveMedicineBodySchema,
+  saveMedicineValidator,
+} from '@/medicine/validators/save-medicine.validator'
 
 @Controller()
 @UseGuards(JwtGuard)
@@ -24,7 +24,7 @@ export class CreateMedicineController {
   @HttpCode(201)
   async handle(
     @CurrentAccount() account: CurrentAccountType,
-    @Body(createMedicineValidator) data: CreateMedicineBodySchema,
+    @Body(saveMedicineValidator) data: SaveMedicineBodySchema,
   ) {
     const medicine = await this.createMedicineUseCase.execute(data)
     return medicine

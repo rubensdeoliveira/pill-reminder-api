@@ -4,6 +4,7 @@ import {
   UpdateMedicineUseCaseInput,
   UpdateMedicineUseCaseOutput,
 } from '@/medicine/dtos/update-medicine.dto'
+import { toMedicineOutput } from '@/medicine/mappers/medicine.mapper'
 import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 
 @Injectable()
@@ -25,6 +26,6 @@ export class UpdateMedicineUseCase {
       name,
     })
 
-    return updatedMedicine
+    return toMedicineOutput(updatedMedicine)
   }
 }

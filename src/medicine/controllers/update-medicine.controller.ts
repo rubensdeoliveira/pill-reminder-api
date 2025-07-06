@@ -21,9 +21,9 @@ import { Roles } from '@/auth/decorators/roles.decorator'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
 import { UpdateMedicineUseCase } from '@/medicine/use-cases/update-medicine.use-case'
 import {
-  UpdateMedicineBodySchema,
-  updateMedicineValidator,
-} from '@/medicine/validators/update-medicine.validator'
+  SaveMedicineBodySchema,
+  saveMedicineValidator,
+} from '@/medicine/validators/save-medicine.validator'
 
 @Controller()
 @UseGuards(JwtGuard)
@@ -36,7 +36,7 @@ export class UpdateMedicineController {
   async handle(
     @CurrentAccount() account: CurrentAccountType,
     @Param(paramValidator) param: ParamBodySchema,
-    @Body(updateMedicineValidator) data: UpdateMedicineBodySchema,
+    @Body(saveMedicineValidator) data: SaveMedicineBodySchema,
   ) {
     const medicine = await this.updateMedicineUseCase.execute({
       ...param,

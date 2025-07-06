@@ -4,6 +4,7 @@ import {
   GetMedicineUseCaseInput,
   GetMedicineUseCaseOutput,
 } from '@/medicine/dtos/get-medicine.dto'
+import { toMedicineOutput } from '@/medicine/mappers/medicine.mapper'
 import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 
 @Injectable()
@@ -19,6 +20,6 @@ export class GetMedicineUseCase {
       throw new NotFoundException('Medicine not found')
     }
 
-    return medicine
+    return toMedicineOutput(medicine)
   }
 }

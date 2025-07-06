@@ -4,7 +4,9 @@ import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
 import {
   AccountTokenRepository,
   CreateAccountTokenRepositoryInput,
+  CreateAccountTokenRepositoryOutput,
   DeleteByIdAccountTokenRepositoryInput,
+  DeleteByIdAccountTokenRepositoryOutput,
   FindByAccountIdAndRefreshTokenAccountTokenRepositoryInput,
   FindByAccountIdAndRefreshTokenAccountTokenRepositoryOutput,
 } from '@/_shared/repositories/account-token.repository'
@@ -13,9 +15,19 @@ import {
 export class AccountTokenPrismaRepository implements AccountTokenRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateAccountTokenRepositoryInput): Promise<void> {
+  async create(
+    data: CreateAccountTokenRepositoryInput,
+  ): Promise<CreateAccountTokenRepositoryOutput> {
     await this.prisma.accountToken.create({
       data,
+    })
+  }
+
+  async deleteById(
+    data: DeleteByIdAccountTokenRepositoryInput,
+  ): Promise<DeleteByIdAccountTokenRepositoryOutput> {
+    await this.prisma.accountToken.delete({
+      where: data,
     })
   }
 
@@ -37,11 +49,5 @@ export class AccountTokenPrismaRepository implements AccountTokenRepository {
     }
     const { id, account } = accountToken
     return { id, account }
-  }
-
-  async deleteById(data: DeleteByIdAccountTokenRepositoryInput): Promise<void> {
-    await this.prisma.accountToken.delete({
-      where: data,
-    })
   }
 }
