@@ -162,3 +162,37 @@ function createFile(dir, { filename, template }) {
 for (const item of structure) {
   createFile(item.dir, item);
 }
+
+function addRouteToConstants(entity) {
+  const routesFile = path.resolve(__dirname, '..', '..', 'constants', 'routes.ts');
+
+  if (!fs.existsSync(routesFile)) {
+    console.error(`❌ Arquivo routes.ts não encontrado em: ${routesFile}`);
+    return;
+  }
+
+  const lines = fs.readFileSync(routesFile, 'utf-8').split('\n');
+
+  const routeLine = `  ${entity}: '/${entity}',`;
+  const alreadyExists = lines.some(line => line.includes(`${entity}:`));
+
+  if (alreadyExists) {
+    console.log(`⚠️  Rota já existe em routes.ts: ${entity}`);
+    return;
+  }
+
+  const closingBraceIndex = lines.findIndex(line => line.trim() === '}');
+
+  if (closingBraceIndex === -1) {
+    console.error('❌ Não foi possível encontrar fechamento do objeto routes.');
+    return;
+  }
+
+  lines.splice(closingBraceIndex, 0, routeLine);
+
+  fs.writeFileSync(routesFile, lines.join('\n'));
+  console.log(`✅ Rota adicionada ao routes.ts: ${routeLine}`);
+}
+
+addRouteToConstants(lower);
+
