@@ -1,9 +1,5 @@
-import { PatientOutput } from '@/patient/dtos/patient.dto'
-import { PatientEntity } from '@/patient/entities/patient.entity'
+import { PatientInput, PatientOutput } from '@/patient/dtos/patient.dto'
 
-export type CreatePatientUseCaseInput = Pick<PatientEntity, 'name'> & {
-  phone: string
-  dob: Date
-}
+export type CreatePatientUseCaseInput = PatientInput
 
 export type CreatePatientUseCaseOutput = PatientOutput

@@ -1,3 +1,10 @@
 import { {{Entity}}Entity } from '../entities/{{entity}}.entity'
 
-export type {{Entity}}Output = Pick<{{Entity}}Entity, 'id' | 'name'>
+export type {{Entity}}Input = {
+  name: string
+}
+
+export type {{Entity}}Output = {
+  id: string
+  name: string
+}

@@ -13,7 +13,11 @@ export class UpdateMedicineUseCase {
 
   async execute({
     id,
-    name,
+    activeIngredient,
+    dosage,
+    pharmaceuticalForm,
+    administrationRoute,
+    posology,
   }: UpdateMedicineUseCaseInput): Promise<UpdateMedicineUseCaseOutput> {
     const medicine = await this.medicineRepository.findById({ id })
 
@@ -21,9 +25,22 @@ export class UpdateMedicineUseCase {
       throw new NotFoundException('Medicine not found')
     }
 
+    const medicineByActiveIngredient =
+      await this.medicineRepository.findByActiveIngredient({
+        activeIngredient,
+      })
+
+    if (medicineByActiveIngredient) {
+      throw new NotFoundException('Medicine already exists')
+    }
+
     const updatedMedicine = await this.medicineRepository.update({
       id,
-      name,
+      activeIngredient,
+      dosage,
+      pharmaceuticalForm,
+      administrationRoute,
+      posology,
     })
 
     return toMedicineOutput(updatedMedicine)

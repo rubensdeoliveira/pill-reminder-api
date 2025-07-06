@@ -35,15 +35,20 @@ model AccountToken {
   accountId    String    @map("account_id")
   expiresDate  DateTime  @map("expires_date")
   createdAt    DateTime? @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
 
   @@map("account_tokens")
 }
 
 model Medicine {
-  id        String    @id @default(uuid())
-  name      String
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  id                  String    @id @default(uuid())
+  activeIngredient    String    @unique @map("active_ingredient")
+  dosage              String
+  pharmaceuticalForm  String    @map("pharmaceutical_form")
+  administrationRoute String    @map("administration_route")
+  posology            String
+  createdAt           DateTime? @default(now()) @map("created_at")
+  updatedAt           DateTime? @updatedAt @map("updated_at")
 
   @@map("medicines")
 }

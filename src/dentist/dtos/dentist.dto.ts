@@ -1,6 +1,19 @@
-import { DentistEntity } from '../entities/dentist.entity'
+import { AccountRoleType } from '@/auth/gateways/jwt.gateway'
 
-export type DentistOutput = Pick<
-  DentistEntity,
-  'id' | 'name' | 'email' | 'phone' | 'dob' | 'role'
->
+export type DentistInput = {
+  name: string
+  email: string
+  phone: string
+  dob: Date
+  confirmPassword: string
+  password: string
+}
+
+export type DentistOutput = {
+  id: string
+  name: string
+  email: string
+  phone: string
+  dob: Date
+  role: AccountRoleType
+}

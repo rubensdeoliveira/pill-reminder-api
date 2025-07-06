@@ -6,6 +6,8 @@ import {
   CreateMedicineRepositoryOutput,
   DeleteMedicineRepositoryInput,
   DeleteMedicineRepositoryOutput,
+  FindByActiveIngredientMedicineRepositoryInput,
+  FindByActiveIngredientMedicineRepositoryOutput,
   FindByIdMedicineRepositoryInput,
   FindByIdMedicineRepositoryOutput,
   MedicineRepository,
@@ -31,6 +33,15 @@ export class MedicinePrismaRepository implements MedicineRepository {
   }: FindByIdMedicineRepositoryInput): Promise<FindByIdMedicineRepositoryOutput> {
     const medicine = await this.prisma.medicine.findUnique({
       where: { id },
+    })
+    return medicine
+  }
+
+  async findByActiveIngredient({
+    activeIngredient,
+  }: FindByActiveIngredientMedicineRepositoryInput): Promise<FindByActiveIngredientMedicineRepositoryOutput> {
+    const medicine = await this.prisma.medicine.findUnique({
+      where: { activeIngredient },
     })
     return medicine
   }

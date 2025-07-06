@@ -1,6 +1,7 @@
-import { {{Entity}}Output } from '@/{{entity}}/dtos/{{entity}}.dto'
-import { {{Entity}}Entity } from '@/{{entity}}/entities/{{entity}}.entity'
+import { {{Entity}}Output, {{Entity}}Input } from '@/{{entity}}/dtos/{{entity}}.dto'
 
-export type Update{{Entity}}UseCaseInput = Pick<{{Entity}}Entity, 'id' | 'name'>
+export type Update{{Entity}}UseCaseInput = {{Entity}}Input & {
+  id: string
+}
 
 export type Update{{Entity}}UseCaseOutput = {{Entity}}Output

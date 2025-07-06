@@ -1,6 +1,7 @@
-import { MedicineOutput } from '@/medicine/dtos/medicine.dto'
-import { MedicineEntity } from '@/medicine/entities/medicine.entity'
+import { MedicineInput, MedicineOutput } from '@/medicine/dtos/medicine.dto'
 
-export type UpdateMedicineUseCaseInput = Pick<MedicineEntity, 'id' | 'name'>
+export type UpdateMedicineUseCaseInput = MedicineInput & {
+  id: string
+}
 
 export type UpdateMedicineUseCaseOutput = MedicineOutput

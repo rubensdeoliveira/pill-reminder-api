@@ -24,7 +24,11 @@ export class ListMedicineUseCase {
         },
         select: {
           id: true,
-          name: true,
+          activeIngredient: true,
+          dosage: true,
+          pharmaceuticalForm: true,
+          administrationRoute: true,
+          posology: true,
         },
       })
     return medicineListPaginated

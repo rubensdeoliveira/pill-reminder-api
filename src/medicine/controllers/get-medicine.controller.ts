@@ -5,21 +5,20 @@ import {
   ParamBodySchema,
   paramValidator,
 } from '@/_shared/validators/param.validation'
+import { Roles } from '@/auth/decorators/roles.decorator'
+import { AccountRole } from '@/auth/gateways/jwt.gateway'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
 import { GetMedicineUseCase } from '@/medicine/use-cases/get-medicine.use-case'
 
 @Controller(routes.medicine)
 @UseGuards(JwtGuard)
-// @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
+@Roles(AccountRole.ADMIN)
 export class GetMedicineController {
   constructor(private getMedicineUseCase: GetMedicineUseCase) {}
 
   @Get(':id')
   @HttpCode(200)
-  async handle(
-    // @CurrentAccount() account: CurrentAccountType,
-    @Param(paramValidator) param: ParamBodySchema,
-  ) {
+  async handle(@Param(paramValidator) param: ParamBodySchema) {
     const medicine = await this.getMedicineUseCase.execute(param)
     return medicine
   }

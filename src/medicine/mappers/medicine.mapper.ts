@@ -3,5 +3,12 @@ import { MedicineOutput } from '@/medicine/dtos/medicine.dto'
 import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
 export function toMedicineOutput(medicine: MedicineEntity): MedicineOutput {
-  return pickFromEntries(medicine, ['id', 'name'])
+  return pickFromEntries(medicine, [
+    'id',
+    'activeIngredient',
+    'dosage',
+    'pharmaceuticalForm',
+    'administrationRoute',
+    'posology',
+  ])
 }

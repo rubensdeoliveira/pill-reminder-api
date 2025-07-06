@@ -13,6 +13,10 @@ export abstract class MedicineRepository {
     data: FindByIdMedicineRepositoryInput,
   ): Promise<FindByIdMedicineRepositoryOutput>
 
+  abstract findByActiveIngredient(
+    data: FindByActiveIngredientMedicineRepositoryInput,
+  ): Promise<FindByActiveIngredientMedicineRepositoryOutput>
+
   abstract update(
     data: UpdateMedicineRepositoryInput,
   ): Promise<UpdateMedicineRepositoryOutput>
@@ -33,6 +37,13 @@ export type FindByIdMedicineRepositoryInput = {
 }
 
 export type FindByIdMedicineRepositoryOutput = MedicineEntity | null
+
+export type FindByActiveIngredientMedicineRepositoryInput = {
+  activeIngredient: string
+}
+
+export type FindByActiveIngredientMedicineRepositoryOutput =
+  MedicineEntity | null
 
 export type UpdateMedicineRepositoryInput = MedicineEntity
 
