@@ -1,5 +1,3 @@
-import { {{Entity}}Entity } from '../entities/{{entity}}.entity'
-
 export type {{Entity}}Input = {
   name: string
 }
