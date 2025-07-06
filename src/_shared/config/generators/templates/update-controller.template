@@ -13,29 +13,29 @@ import {
   paramValidator,
 } from '@/_shared/validators/param.validation'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
-import { UpdateMedicineUseCase } from '@/medicine/use-cases/update-medicine.use-case'
+import { Update{{Entity}}UseCase } from '@/{{entity}}/use-cases/update-{{entity}}.use-case'
 import {
-  SaveMedicineBodySchema,
-  saveMedicineValidator,
-} from '@/medicine/validators/save-medicine.validator'
+  Save{{Entity}}BodySchema,
+  save{{Entity}}Validator,
+} from '@/{{entity}}/validators/save-{{entity}}.validator'
 
-@Controller(routes.medicine)
+@Controller(routes.{{entity}})
 @UseGuards(JwtGuard)
 // @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
-export class UpdateMedicineController {
-  constructor(private updateMedicineUseCase: UpdateMedicineUseCase) {}
+export class Update{{Entity}}Controller {
+  constructor(private update{{Entity}}UseCase: Update{{Entity}}UseCase) {}
 
   @Put(':id')
   @HttpCode(200)
   async handle(
     // @CurrentAccount() account: CurrentAccountType,
     @Param(paramValidator) param: ParamBodySchema,
-    @Body(saveMedicineValidator) data: SaveMedicineBodySchema,
+    @Body(save{{Entity}}Validator) data: Save{{Entity}}BodySchema,
   ) {
-    const medicine = await this.updateMedicineUseCase.execute({
+    const {{entity}} = await this.update{{Entity}}UseCase.execute({
       ...param,
       ...data,
     })
-    return medicine
+    return {{entity}}
   }
 }

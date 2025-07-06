@@ -1,0 +1,26 @@
+import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
+
+import { routes } from '@/_shared/constants/routes'
+import { JwtGuard } from '@/auth/guards/jwt.guard'
+import { Create{{Entity}}UseCase } from '@/{{entity}}/use-cases/create-{{entity}}.use-case'
+import {
+  Save{{Entity}}BodySchema,
+  save{{Entity}}Validator,
+} from '@/{{entity}}/validators/save-{{entity}}.validator'
+
+@Controller(routes.{{entity}})
+@UseGuards(JwtGuard)
+// @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
+export class Create{{Entity}}Controller {
+  constructor(private create{{Entity}}UseCase: Create{{Entity}}UseCase) {}
+
+  @Post()
+  @HttpCode(201)
+  async handle(
+    // @CurrentAccount() account: CurrentAccountType,
+    @Body(save{{Entity}}Validator) data: Save{{Entity}}BodySchema,
+  ) {
+    const {{entity}} = await this.create{{Entity}}UseCase.execute(data)
+    return {{entity}}
+  }
+}

@@ -12,9 +12,9 @@ import { EnvNestGateway } from '@/_shared/gateways/implementations/env-nest.gate
 import { JwtNestGateway } from '@/_shared/gateways/implementations/jwt-nest.gateway'
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
+import { GenericRepository } from '@/_shared/repositories/generic.repository'
 import { AccountTokenPrismaRepository } from '@/_shared/repositories/implementations/account-token-prisma.repository'
-import { GenericPrismaRepository } from '@/_shared/repositories/implementations/shared-prisma.repository'
-import { SharedRepository } from '@/_shared/repositories/shared.repository'
+import { GenericPrismaRepository } from '@/_shared/repositories/implementations/generic-prisma.repository'
 
 @Module({
   providers: [
@@ -44,7 +44,7 @@ import { SharedRepository } from '@/_shared/repositories/shared.repository'
       useClass: AccountTokenPrismaRepository,
     },
     {
-      provide: SharedRepository,
+      provide: GenericRepository,
       useClass: GenericPrismaRepository,
     },
   ],
@@ -56,7 +56,7 @@ import { SharedRepository } from '@/_shared/repositories/shared.repository'
     EnvGateway,
     JwtGateway,
     AccountTokenRepository,
-    SharedRepository,
+    GenericRepository,
   ],
 })
 export class SharedModule {}

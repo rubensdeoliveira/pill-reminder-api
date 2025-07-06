@@ -1,0 +1,7 @@
+import { {{Entity}}Output } from '@/{{entity}}/dtos/{{entity}}.dto'
+
+export type Get{{Entity}}UseCaseInput = {
+  id: string
+}
+
+export type Get{{Entity}}UseCaseOutput = {{Entity}}Output

@@ -1,0 +1,55 @@
+import { Injectable } from '@nestjs/common'
+
+import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
+import {
+  Create{{Entity}}RepositoryInput,
+  Create{{Entity}}RepositoryOutput,
+  Delete{{Entity}}RepositoryInput,
+  Delete{{Entity}}RepositoryOutput,
+  FindById{{Entity}}RepositoryInput,
+  FindById{{Entity}}RepositoryOutput,
+  {{Entity}}Repository,
+  Update{{Entity}}RepositoryInput,
+  Update{{Entity}}RepositoryOutput,
+} from '@/{{entity}}/repositories/{{entity}}.repository'
+
+@Injectable()
+export class {{Entity}}PrismaRepository implements {{Entity}}Repository {
+  constructor(private prisma: PrismaService) {}
+
+  async create(
+    data: Create{{Entity}}RepositoryInput,
+  ): Promise<Create{{Entity}}RepositoryOutput> {
+    const {{entity}} = await this.prisma.{{entity}}.create({
+      data,
+    })
+    return {{entity}}
+  }
+
+  async findById({
+    id,
+  }: FindById{{Entity}}RepositoryInput): Promise<FindById{{Entity}}RepositoryOutput> {
+    const {{entity}} = await this.prisma.{{entity}}.findUnique({
+      where: { id },
+    })
+    return {{entity}}
+  }
+
+  async update(
+    data: Update{{Entity}}RepositoryInput,
+  ): Promise<Update{{Entity}}RepositoryOutput> {
+    const {{entity}} = await this.prisma.{{entity}}.update({
+      where: { id: data.id },
+      data,
+    })
+    return {{entity}}
+  }
+
+  async delete({
+    id,
+  }: Delete{{Entity}}RepositoryInput): Promise<Delete{{Entity}}RepositoryOutput> {
+    await this.prisma.{{entity}}.delete({
+      where: { id },
+    })
+  }
+}

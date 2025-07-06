@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common'
 
-import { ROUTES } from '@/_shared/constants/routes'
+import { routes } from '@/_shared/constants/routes'
 import {
   CurrentAccount,
   CurrentAccountType,
@@ -8,12 +8,12 @@ import {
 import { JwtGuard } from '@/auth/guards/jwt.guard'
 import { GetDentistUseCase } from '@/dentist/use-cases/get-dentist.use-case'
 
-@Controller()
+@Controller(routes.dentist)
 @UseGuards(JwtGuard)
 export class GetDentistController {
   constructor(private readonly getDentistUseCase: GetDentistUseCase) {}
 
-  @Get(ROUTES.DENTIST.ME)
+  @Get('/me')
   async handle(@CurrentAccount() account: CurrentAccountType) {
     const { accountId } = account
     const getAccount = await this.getDentistUseCase.execute({

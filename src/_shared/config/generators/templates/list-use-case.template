@@ -1,0 +1,32 @@
+import { Injectable } from '@nestjs/common'
+
+import { GenericRepository } from '@/_shared/repositories/generic.repository'
+import {
+  List{{Entity}}Input,
+  List{{Entity}}Output,
+} from '@/{{entity}}/dtos/list-{{entity}}.dto'
+import { {{Entity}}Output } from '@/{{entity}}/dtos/{{entity}}.dto'
+
+@Injectable()
+export class List{{Entity}}UseCase {
+  constructor(private genericRepository: GenericRepository) {}
+
+  async execute({
+    itemsPerPage,
+    page,
+  }: List{{Entity}}Input): Promise<List{{Entity}}Output> {
+    const {{entity}}ListPaginated =
+      await this.genericRepository.listPaginated<{{Entity}}Output>({
+        model: '{{entity}}',
+        pagination: {
+          itemsPerPage,
+          page,
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    return {{entity}}ListPaginated
+  }
+}

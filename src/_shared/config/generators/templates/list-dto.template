@@ -1,0 +1,9 @@
+import {
+  ListPaginatedInputPagination,
+  ListPaginatedOutput,
+} from '@/_shared/repositories/generic.repository'
+import { {{Entity}}Output } from '@/{{entity}}/dtos/{{entity}}.dto'
+
+export type List{{Entity}}Input = ListPaginatedInputPagination
+
+export type List{{Entity}}Output = ListPaginatedOutput<{{Entity}}Output>

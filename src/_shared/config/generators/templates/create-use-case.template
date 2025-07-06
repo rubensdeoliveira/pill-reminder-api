@@ -1,0 +1,23 @@
+import { Injectable } from '@nestjs/common'
+
+import {
+  Create{{Entity}}UseCaseInput,
+  Create{{Entity}}UseCaseOutput,
+} from '@/{{entity}}/dtos/create-{{entity}}.dto'
+import { to{{Entity}}Output } from '@/{{entity}}/mappers/{{entity}}.mapper'
+import { {{Entity}}Repository } from '@/{{entity}}/repositories/{{entity}}.repository'
+
+@Injectable()
+export class Create{{Entity}}UseCase {
+  constructor(private {{entity}}Repository: {{Entity}}Repository) {}
+
+  async execute({
+    name,
+  }: Create{{Entity}}UseCaseInput): Promise<Create{{Entity}}UseCaseOutput> {
+    const {{entity}} = await this.{{entity}}Repository.create({
+      name,
+    })
+
+    return to{{Entity}}Output({{entity}})
+  }
+}

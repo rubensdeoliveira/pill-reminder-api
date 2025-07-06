@@ -1,0 +1,25 @@
+import { Injectable, NotFoundException } from '@nestjs/common'
+
+import {
+  Get{{Entity}}UseCaseInput,
+  Get{{Entity}}UseCaseOutput,
+} from '@/{{entity}}/dtos/get-{{entity}}.dto'
+import { to{{Entity}}Output } from '@/{{entity}}/mappers/{{entity}}.mapper'
+import { {{Entity}}Repository } from '@/{{entity}}/repositories/{{entity}}.repository'
+
+@Injectable()
+export class Get{{Entity}}UseCase {
+  constructor(private {{entity}}Repository: {{Entity}}Repository) {}
+
+  async execute({
+    id,
+  }: Get{{Entity}}UseCaseInput): Promise<Get{{Entity}}UseCaseOutput> {
+    const {{entity}} = await this.{{entity}}Repository.findById({ id })
+
+    if (!{{entity}}) {
+      throw new NotFoundException('{{Entity}} not found')
+    }
+
+    return to{{Entity}}Output({{entity}})
+  }
+}

@@ -6,13 +6,13 @@ import {
   paginationValidator,
 } from '@/_shared/validators/pagination.validation'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
-import { ListMedicineUseCase } from '@/medicine/use-cases/list-medicine.use-case'
+import { List{{Entity}}UseCase } from '@/{{entity}}/use-cases/list-{{entity}}.use-case'
 
-@Controller(routes.medicine)
+@Controller(routes.{{entity}})
 @UseGuards(JwtGuard)
 // @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
-export class ListMedicineController {
-  constructor(private listMedicineUseCase: ListMedicineUseCase) {}
+export class List{{Entity}}Controller {
+  constructor(private list{{Entity}}UseCase: List{{Entity}}UseCase) {}
 
   @Get()
   @HttpCode(200)
@@ -20,7 +20,7 @@ export class ListMedicineController {
     // @CurrentAccount() account: CurrentAccountType,
     @Query(paginationValidator) query: PaginationBodySchema,
   ) {
-    const medicine = await this.listMedicineUseCase.execute(query)
-    return medicine
+    const {{entity}} = await this.list{{Entity}}UseCase.execute(query)
+    return {{entity}}
   }
 }

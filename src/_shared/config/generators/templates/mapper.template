@@ -1,0 +1,7 @@
+import { pickFromEntries } from '@/_shared/helpers/pick-from-entries.helper'
+import { {{Entity}}Output } from '@/{{entity}}/dtos/{{entity}}.dto'
+import { {{Entity}}Entity } from '@/{{entity}}/entities/{{entity}}.entity'
+
+export function to{{Entity}}Output({{entity}}: {{Entity}}Entity): {{Entity}}Output {
+  return pickFromEntries({{entity}}, ['id', 'name'])
+}

@@ -6,13 +6,13 @@ import {
   paramValidator,
 } from '@/_shared/validators/param.validation'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
-import { GetMedicineUseCase } from '@/medicine/use-cases/get-medicine.use-case'
+import { Get{{Entity}}UseCase } from '@/{{entity}}/use-cases/get-{{entity}}.use-case'
 
-@Controller(routes.medicine)
+@Controller(routes.{{entity}})
 @UseGuards(JwtGuard)
 // @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
-export class GetMedicineController {
-  constructor(private getMedicineUseCase: GetMedicineUseCase) {}
+export class Get{{Entity}}Controller {
+  constructor(private get{{Entity}}UseCase: Get{{Entity}}UseCase) {}
 
   @Get(':id')
   @HttpCode(200)
@@ -20,7 +20,7 @@ export class GetMedicineController {
     // @CurrentAccount() account: CurrentAccountType,
     @Param(paramValidator) param: ParamBodySchema,
   ) {
-    const medicine = await this.getMedicineUseCase.execute(param)
-    return medicine
+    const {{entity}} = await this.get{{Entity}}UseCase.execute(param)
+    return {{entity}}
   }
 }

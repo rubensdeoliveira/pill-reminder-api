@@ -13,7 +13,8 @@
     "db:seed": "prisma db seed",
     "prepare:dev": "pnpm i && docker compose up -d postgres && pnpm db",
     "clean": "chmod +x clean.sh && ./clean.sh",
-    "generate": "node src/_shared/config/generators/generate.js"
+    "generate": "node src/_shared/config/generators/generate.js",
+    "postgenerate": "pnpm lint"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

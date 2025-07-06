@@ -1,0 +1,31 @@
+import { Injectable, NotFoundException } from '@nestjs/common'
+
+import {
+  Update{{Entity}}UseCaseInput,
+  Update{{Entity}}UseCaseOutput,
+} from '@/{{entity}}/dtos/update-{{entity}}.dto'
+import { to{{Entity}}Output } from '@/{{entity}}/mappers/{{entity}}.mapper'
+import { {{Entity}}Repository } from '@/{{entity}}/repositories/{{entity}}.repository'
+
+@Injectable()
+export class Update{{Entity}}UseCase {
+  constructor(private {{entity}}Repository: {{Entity}}Repository) {}
+
+  async execute({
+    id,
+    name,
+  }: Update{{Entity}}UseCaseInput): Promise<Update{{Entity}}UseCaseOutput> {
+    const {{entity}} = await this.{{entity}}Repository.findById({ id })
+
+    if (!{{entity}}) {
+      throw new NotFoundException('{{Entity}} not found')
+    }
+
+    const updated{{Entity}} = await this.{{entity}}Repository.update({
+      id,
+      name,
+    })
+
+    return to{{Entity}}Output(updated{{Entity}})
+  }
+}

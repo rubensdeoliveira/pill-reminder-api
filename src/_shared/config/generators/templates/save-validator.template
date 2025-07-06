@@ -1,0 +1,13 @@
+import { z } from 'zod'
+
+import { ZodValidationPipe } from '@/_shared/pipes/zod-validation.pipe'
+
+const save{{Entity}}BodySchema = z.object({
+  name: z.string(),
+})
+
+export type Save{{Entity}}BodySchema = z.infer<typeof save{{Entity}}BodySchema>
+
+export const save{{Entity}}Validator = new ZodValidationPipe(
+  save{{Entity}}BodySchema,
+)

@@ -1,0 +1,39 @@
+import { {{Entity}}Entity } from '@/{{entity}}/entities/{{entity}}.entity'
+
+export abstract class {{Entity}}Repository {
+  abstract create(
+    data: Create{{Entity}}RepositoryInput,
+  ): Promise<Create{{Entity}}RepositoryOutput>
+
+  abstract delete(
+    data: Delete{{Entity}}RepositoryInput,
+  ): Promise<Delete{{Entity}}RepositoryOutput>
+
+  abstract findById(
+    data: FindById{{Entity}}RepositoryInput,
+  ): Promise<FindById{{Entity}}RepositoryOutput>
+
+  abstract update(
+    data: Update{{Entity}}RepositoryInput,
+  ): Promise<Update{{Entity}}RepositoryOutput>
+}
+
+export type Create{{Entity}}RepositoryInput = Omit<{{Entity}}Entity, 'id'>
+
+export type Create{{Entity}}RepositoryOutput = {{Entity}}Entity
+
+export type Delete{{Entity}}RepositoryInput = {
+  id: string
+}
+
+export type Delete{{Entity}}RepositoryOutput = void
+
+export type FindById{{Entity}}RepositoryInput = {
+  id: string
+}
+
+export type FindById{{Entity}}RepositoryOutput = {{Entity}}Entity | null
+
+export type Update{{Entity}}RepositoryInput = {{Entity}}Entity
+
+export type Update{{Entity}}RepositoryOutput = {{Entity}}Entity

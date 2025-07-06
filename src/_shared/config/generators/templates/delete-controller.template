@@ -6,13 +6,13 @@ import {
   paramValidator,
 } from '@/_shared/validators/param.validation'
 import { JwtGuard } from '@/auth/guards/jwt.guard'
-import { DeleteMedicineUseCase } from '@/medicine/use-cases/delete-medicine.use-case'
+import { Delete{{Entity}}UseCase } from '@/{{entity}}/use-cases/delete-{{entity}}.use-case'
 
-@Controller(routes.medicine)
+@Controller(routes.{{entity}})
 @UseGuards(JwtGuard)
 // @Roles(AccountRole.DENTIST, AccountRole.ADMIN)
-export class DeleteMedicineController {
-  constructor(private deleteMedicineUseCase: DeleteMedicineUseCase) {}
+export class Delete{{Entity}}Controller {
+  constructor(private delete{{Entity}}UseCase: Delete{{Entity}}UseCase) {}
 
   @Delete(':id')
   @HttpCode(204)
@@ -20,6 +20,6 @@ export class DeleteMedicineController {
     // @CurrentAccount() account: CurrentAccountType,
     @Param(paramValidator) param: ParamBodySchema,
   ) {
-    await this.deleteMedicineUseCase.execute(param)
+    await this.delete{{Entity}}UseCase.execute(param)
   }
 }

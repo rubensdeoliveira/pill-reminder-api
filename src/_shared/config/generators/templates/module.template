@@ -1,0 +1,39 @@
+import { Module } from '@nestjs/common'
+
+import { SharedModule } from '@/_shared/shared.module'
+import { Create{{Entity}}Controller } from '@/{{entity}}/controllers/create-{{entity}}.controller'
+import { Delete{{Entity}}Controller } from '@/{{entity}}/controllers/delete-{{entity}}.controller'
+import { Get{{Entity}}Controller } from '@/{{entity}}/controllers/get-{{entity}}.controller'
+import { List{{Entity}}Controller } from '@/{{entity}}/controllers/list-{{entity}}.controller'
+import { Update{{Entity}}Controller } from '@/{{entity}}/controllers/update-{{entity}}.controller'
+import { {{Entity}}PrismaRepository } from '@/{{entity}}/repositories/implementations/{{entity}}-prisma.repository'
+import { {{Entity}}Repository } from '@/{{entity}}/repositories/{{entity}}.repository'
+import { Create{{Entity}}UseCase } from '@/{{entity}}/use-cases/create-{{entity}}.use-case'
+import { Delete{{Entity}}UseCase } from '@/{{entity}}/use-cases/delete-{{entity}}.use-case'
+import { Get{{Entity}}UseCase } from '@/{{entity}}/use-cases/get-{{entity}}.use-case'
+import { List{{Entity}}UseCase } from '@/{{entity}}/use-cases/list-{{entity}}.use-case'
+import { Update{{Entity}}UseCase } from '@/{{entity}}/use-cases/update-{{entity}}.use-case'
+
+@Module({
+  imports: [SharedModule],
+  controllers: [
+    Create{{Entity}}Controller,
+    Delete{{Entity}}Controller,
+    Get{{Entity}}Controller,
+    List{{Entity}}Controller,
+    Update{{Entity}}Controller,
+  ],
+  providers: [
+    Create{{Entity}}UseCase,
+    Delete{{Entity}}UseCase,
+    Get{{Entity}}UseCase,
+    List{{Entity}}UseCase,
+    Update{{Entity}}UseCase,
+    {
+      provide: {{Entity}}Repository,
+      useClass: {{Entity}}PrismaRepository,
+    },
+  ],
+  exports: [{{Entity}}Repository],
+})
+export class {{Entity}}Module {}
