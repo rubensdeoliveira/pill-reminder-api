@@ -1,23 +1,24 @@
 import { Injectable } from '@nestjs/common'
 
 import { PrismaService } from '@/_shared/database/prisma/config/prisma.service'
+import { GenericRepository } from '@/_shared/repositories/generic.repository'
 import {
   ListPaginatedInput,
   ListPaginatedOutput,
-  SharedRepository,
-} from '@/_shared/repositories/shared.repository'
+} from '@/_shared/repositories/types/list-options'
 
 @Injectable()
-export class SharedPrismaRepository implements SharedRepository {
+export class GenericPrismaRepository implements GenericRepository {
   constructor(private prisma: PrismaService) {}
 
-  async listPaginated<T>(
-    model: string,
-    input: ListPaginatedInput,
-    orderBy: Record<string, 'asc' | 'desc'> = { createdAt: 'desc' },
-    where?: Record<string, any>,
-  ): Promise<ListPaginatedOutput<T>> {
-    const { page = 1, itemsPerPage = 10 } = input
+  async listPaginated<T>({
+    model,
+    pagination,
+    orderBy,
+    where,
+    select,
+  }: ListPaginatedInput<T>): Promise<ListPaginatedOutput<T>> {
+    const { page = 1, itemsPerPage = 10 } = pagination
     const skip = (page - 1) * itemsPerPage
 
     const [items, total] = await Promise.all([
@@ -26,6 +27,7 @@ export class SharedPrismaRepository implements SharedRepository {
         take: itemsPerPage,
         orderBy,
         where,
+        select,
       }),
       this.prisma[model].count({ where }),
     ])

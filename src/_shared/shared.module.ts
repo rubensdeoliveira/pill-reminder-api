@@ -13,7 +13,7 @@ import { JwtNestGateway } from '@/_shared/gateways/implementations/jwt-nest.gate
 import { JwtGateway } from '@/_shared/gateways/jwt.gateway'
 import { AccountTokenRepository } from '@/_shared/repositories/account-token.repository'
 import { AccountTokenPrismaRepository } from '@/_shared/repositories/implementations/account-token-prisma.repository'
-import { SharedPrismaRepository } from '@/_shared/repositories/implementations/shared-prisma.repository'
+import { GenericPrismaRepository } from '@/_shared/repositories/implementations/shared-prisma.repository'
 import { SharedRepository } from '@/_shared/repositories/shared.repository'
 
 @Module({
@@ -45,7 +45,7 @@ import { SharedRepository } from '@/_shared/repositories/shared.repository'
     },
     {
       provide: SharedRepository,
-      useClass: SharedPrismaRepository,
+      useClass: GenericPrismaRepository,
     },
   ],
   exports: [

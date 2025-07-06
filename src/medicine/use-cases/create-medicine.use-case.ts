@@ -10,10 +10,12 @@ import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 export class CreateMedicineUseCase {
   constructor(private medicineRepository: MedicineRepository) {}
 
-  async execute(
-    input: CreateMedicineUseCaseInput,
-  ): Promise<CreateMedicineUseCaseOutput> {
-    const medicine = await this.medicineRepository.create(input)
+  async execute({
+    name,
+  }: CreateMedicineUseCaseInput): Promise<CreateMedicineUseCaseOutput> {
+    const medicine = await this.medicineRepository.create({
+      name,
+    })
 
     return medicine
   }

@@ -20,23 +20,19 @@ export class MedicinePrismaRepository implements MedicineRepository {
   async create(
     data: CreateMedicineRepositoryInput,
   ): Promise<CreateMedicineRepositoryOutput> {
-    const { id, name } = await this.prisma.medicine.create({
+    const medicine = await this.prisma.medicine.create({
       data,
     })
-    return { id, name }
+    return medicine
   }
 
-  async findById(
-    data: FindByIdMedicineRepositoryInput,
-  ): Promise<FindByIdMedicineRepositoryOutput> {
+  async findById({
+    id,
+  }: FindByIdMedicineRepositoryInput): Promise<FindByIdMedicineRepositoryOutput> {
     const medicine = await this.prisma.medicine.findUnique({
-      where: data,
+      where: { id },
     })
-    if (!medicine) {
-      return null
-    }
-    const { id, name } = medicine
-    return { id, name }
+    return medicine
   }
 
   async update(
@@ -46,15 +42,14 @@ export class MedicinePrismaRepository implements MedicineRepository {
       where: { id: data.id },
       data,
     })
-    const { id, name } = medicine
-    return { id, name }
+    return medicine
   }
 
-  async delete(
-    data: DeleteMedicineRepositoryInput,
-  ): Promise<DeleteMedicineRepositoryOutput> {
+  async delete({
+    id,
+  }: DeleteMedicineRepositoryInput): Promise<DeleteMedicineRepositoryOutput> {
     await this.prisma.medicine.delete({
-      where: data,
+      where: { id },
     })
   }
 }

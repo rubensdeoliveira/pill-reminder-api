@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 
 import {
   GetMedicineUseCaseInput,
@@ -10,13 +10,13 @@ import { MedicineRepository } from '@/medicine/repositories/medicine.repository'
 export class GetMedicineUseCase {
   constructor(private medicineRepository: MedicineRepository) {}
 
-  async execute(
-    input: GetMedicineUseCaseInput,
-  ): Promise<GetMedicineUseCaseOutput> {
-    const medicine = await this.medicineRepository.findById(input)
+  async execute({
+    id,
+  }: GetMedicineUseCaseInput): Promise<GetMedicineUseCaseOutput> {
+    const medicine = await this.medicineRepository.findById({ id })
 
     if (!medicine) {
-      throw new Error('Medicine not found')
+      throw new NotFoundException('Medicine not found')
     }
 
     return medicine

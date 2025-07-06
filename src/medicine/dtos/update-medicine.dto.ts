@@ -1,9 +1,5 @@
-export type UpdateMedicineUseCaseInput = {
-  id: string
-  name: string
-}
+import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
-export type UpdateMedicineUseCaseOutput = {
-  id: string
-  name: string
-}
+export type UpdateMedicineUseCaseInput = Pick<MedicineEntity, 'id' | 'name'>
+
+export type UpdateMedicineUseCaseOutput = Pick<MedicineEntity, 'id' | 'name'>

@@ -1,8 +1,5 @@
-export type CreateMedicineUseCaseInput = {
-  name: string
-}
+import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
-export type CreateMedicineUseCaseOutput = {
-  id: string
-  name: string
-}
+export type CreateMedicineUseCaseInput = Pick<MedicineEntity, 'name'>
+
+export type CreateMedicineUseCaseOutput = Pick<MedicineEntity, 'id' | 'name'>

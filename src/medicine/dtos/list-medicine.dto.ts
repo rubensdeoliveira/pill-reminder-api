@@ -1,9 +1,11 @@
 import {
-  ListPaginatedInput,
+  ListPaginatedInputPagination,
   ListPaginatedOutput,
-} from '@/_shared/repositories/shared.repository'
+} from '@/_shared/repositories/types/list-options'
 import { MedicineEntity } from '@/medicine/entities/medicine.entity'
 
-export type ListMedicineInput = ListPaginatedInput
+export type ListMedicineInput = ListPaginatedInputPagination
 
-export type ListMedicineOutput = ListPaginatedOutput<MedicineEntity>
+export type ListMedicineOutputItem = Pick<MedicineEntity, 'id' | 'name'>
+
+export type ListMedicineOutput = ListPaginatedOutput<ListMedicineOutputItem>
