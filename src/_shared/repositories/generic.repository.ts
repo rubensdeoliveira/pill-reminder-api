@@ -17,7 +17,10 @@ export type ListPaginatedInput<T> = OptionalSelectFields<T> & {
 
 export type ListPaginatedOutput<T> = {
   items: T[]
-  total: number
+  totalItems: number
+  totalPages: number
+  currentPage: number
+  itemsPerPage: number
 }
 
 // Auxiliary types

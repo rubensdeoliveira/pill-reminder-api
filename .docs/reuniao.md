@@ -4,25 +4,34 @@ Registrar medicamentos:
 - princípio ativo – campo aberto – dipirona 50mg/ml
 - dose – campo aberto – 50mg/ml
 - forma farmacêutica – selecionar –.
-    • Solução oral
-    • Suspensão oral 
-    • Comprimido
-    • Cápsula
-    • Pílula
-    • Pastilha
-    • Drágea
-    • Xarope
-    • Gotas
-    • Pomada
-    • Creme
-    • pasta
-    • Spray / aerossol
+    • Solução oral -> tomar
+    • Suspensão oral -> tomar
+    • Comprimido -> tomar
+    • Cápsula -> tomar
+    • Pílula -> tomar
+    • Pastilha -> chupar
+    • Drágea -> tomar
+    • Xarope -> tomar
+    • Gotas -> tomar
+    • Pomada -> aplicar
+    • Creme -> aplicar
+    • pasta -> aplicar
+    • Spray / aerossol -> aplicar
 - via de administração - selecionar
     • Oral
     • Sublingual 
     • tópica
-- posologia – campo aberto – tomar 01 (uma) cápsula de 500mg a cada 08 horas por 07 dias
+- quantidade a ser tomada - campo numérico - 1
+- tempo de administração - campo numérico - 8
+- quantidade de dias - campo numérico - 7
+- enquanto dor - campo boolean - ou vai ser preenchido esse ou quantidade de dias
 
+no final gerar esse texto seguindo o padrão:
+tomar {quantidade a ser tomada} {via de administração} 
+tomar 1 cápsula via oral a cada 8 horas por 7 dias
+ao adicionar prescrição o texto de posologia deve aparecer para o dentista e ser salvo no banco
+para o dentista será gerado o tratamento do paciente da seguinte forma (salvar no banco):
+{verbo de acordo com a forma farmacêutica} {quantidade a ser tomada} {forma farmacêutica} {via de administração} {tempo de administração} {quantidade de dias}
 
 DENTISTA:
 PRESCRIÇÃO:

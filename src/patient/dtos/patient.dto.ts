@@ -7,8 +7,8 @@ export type PatientInput = {
 export type PatientOutput = {
   id: string
   name: string
-  email: string
-  phone: string
-  dob: Date
+  email: string | null
+  phone: string | null
+  dob: Date | null
   role: string
 }

@@ -21,7 +21,7 @@ export class GenericPrismaRepository implements GenericRepository {
     const { page = 1, itemsPerPage = 10 } = pagination
     const skip = (page - 1) * itemsPerPage
 
-    const [items, total] = await Promise.all([
+    const [items, totalItems] = await Promise.all([
       this.prisma[model].findMany({
         skip,
         take: itemsPerPage,
@@ -34,7 +34,10 @@ export class GenericPrismaRepository implements GenericRepository {
 
     return {
       items,
-      total,
+      totalItems,
+      totalPages: Math.ceil(totalItems / itemsPerPage),
+      currentPage: page,
+      itemsPerPage,
     }
   }
 }

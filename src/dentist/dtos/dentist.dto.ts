@@ -12,8 +12,8 @@ export type DentistInput = {
 export type DentistOutput = {
   id: string
   name: string
-  email: string
-  phone: string
-  dob: Date
+  email: string | null
+  phone: string | null
+  dob: Date | null
   role: AccountRoleType
 }
